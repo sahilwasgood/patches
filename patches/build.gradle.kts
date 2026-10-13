@@ -1,14 +1,14 @@
-group = "app.template"
+group = "app.sahilwasgood"
 
 patches {
     // TODO: Update this section with your project details.
     about {
-        name = "UserXYZ Patches"
-        description = "Patches for apps I like"
-        source = "git@github.com:UserXYZ/morphe-patches.git"
-        author = "Awesome dev"
-        contact = "na"
-        website = "na"
+        name = "Patches"
+        description = "Patches for apps I use: branding presets, button styles and more"
+        source = "https://github.com/sahilwasgood/patches"
+        author = "sahilwasgood"
+        contact = "https://github.com/sahilwasgood"
+        website = "https://github.com/sahilwasgood/patches"
         license = "GPLv3"
     }
 }
