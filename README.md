@@ -1,15 +1,28 @@
 # Patches
 
-Patches for apps I use. Starting set: preset branding packs for YouTube and
-YT Music (launcher logo packs including Vanced Light, player overlay button
-styles, Shorts button styles). Static v1 — everything applies at patch time.
-Compatible with Morphe.
+Branding presets for YouTube and YT Music. Pick a logo pack, a button style,
+patch, install. Works with Morphe Manager and Morphe Desktop.
 
-### How to use these patches
+<p align="center">
+  <a href="https://morphe.software/add-source?github=sahilwasgood/patches">
+    <img src=".github/assets/add-to-manager.svg" alt="Add to Morphe" width="380">
+  </a>
+</p>
 
-Click here to add these patches to Morphe: https://morphe.software/add-source?github=sahilwasgood/patches
+## Included
 
-## 🩹 Patches list
+Logo packs. 21 for YouTube and 14 for YT Music, including Vanced Light and
+Vanced Black. The notification icon matches the pack, never stock.
+
+Overlay buttons. Bold, Rounded and Thin player button styles for YouTube.
+
+Shorts buttons. Cairo, Outline, Outline Circle, Round and YouTube Outline
+styles for YouTube Shorts. Stock leaves the app untouched.
+
+Custom art. Bring your own icon folder and header folder instead of a preset.
+See the Custom icon and Custom header options inside each patch.
+
+## Patches list
 
 <!-- PATCHES_START EXPANDED -->
 > **[v1.0.0-dev.1](https://github.com/sahilwasgood/patches/releases/tag/v1.0.0-dev.1)**&nbsp;&nbsp;•&nbsp;&nbsp;`dev`&nbsp;&nbsp;•&nbsp;&nbsp;4 patches total
@@ -37,15 +50,12 @@ Click here to add these patches to Morphe: https://morphe.software/add-source?gi
 
 <!-- PATCHES_END -->
 
-### 🛠️ Building locally
+## Build it yourself
 
-- Run `./gradlew buildAndroid`
-- The built patches .mpp file is found in `patches/build/libs/patches-*.mpp`
-- Patch the mpp file using [Morphe-Desktop](https://github.com/MorpheApp/morphe-desktop)
-  like any other patch bundle.
+Needs Java 21 and `./gradlew buildAndroid`. The bundle lands in
+`patches/build/libs`. Details live in the
+[Morphe documentation](https://github.com/MorpheApp/morphe-documentation).
 
-See the [Morphe documentation](https://github.com/MorpheApp/morphe-documentation) for more information.
+## License
 
-## 📜 License
-
-Patches are licensed under the [GNU General Public License v3.0](LICENSE)
+GPLv3. See [LICENSE](LICENSE).
