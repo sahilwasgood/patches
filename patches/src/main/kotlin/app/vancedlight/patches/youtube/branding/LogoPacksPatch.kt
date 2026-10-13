@@ -27,12 +27,75 @@ private val DENSITIES = listOf("mdpi", "hdpi", "xhdpi", "xxhdpi", "xxxhdpi")
 private const val BG = "adaptiveproduct_youtube_background_color_108.png"
 private const val FG = "adaptiveproduct_youtube_foreground_color_108.png"
 private const val MONO = "adaptive_monochrome_ic_youtube_launcher.xml"
+private const val STOCK_NOTIFICATION = "ic_stat_yt_notification_logo"
 
 private fun copyBundled(path: String, target: File) {
     val stream = object {}.javaClass.classLoader.getResourceAsStream(path)
         ?: throw PatchException("Bundled resource missing: $path")
     target.parentFile.mkdirs()
     stream.use { src -> target.outputStream().use { src.copyTo(it) } }
+}
+
+private fun ResourcePatchContext.writeLauncherXml(style: String, hasMono: Boolean) {
+    val monoLine = if (hasMono) {
+        "\n                <monochrome android:drawable=\"@drawable/morphe_adaptive_monochrome_$style\" />"
+    } else {
+        ""
+    }
+    get("res").resolve("mipmap-anydpi/morphe_launcher_$style.xml").apply {
+        parentFile.mkdirs()
+        writeText(
+            "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
+                "<adaptive-icon xmlns:android=\"http://schemas.android.com/apk/res/android\">\n" +
+                "                <background android:drawable=\"@mipmap/morphe_adaptive_background_$style\" />\n" +
+                "                <foreground android:drawable=\"@mipmap/morphe_adaptive_foreground_$style\" />$monoLine\n" +
+                "            </adaptive-icon>\n",
+        )
+    }
+}
+
+private fun ResourcePatchContext.pointManifestAt(style: String) {
+    document("AndroidManifest.xml").use { doc ->
+        val app = doc.getElementsByTagName("application").item(0) as Element
+        app.setAttribute("android:icon", "@mipmap/morphe_launcher_$style")
+        app.removeAttribute("android:roundIcon")
+    }
+}
+
+private fun ResourcePatchContext.deleteStockNotification() {
+    get("res").listFiles { f -> f.isDirectory && f.name.startsWith("drawable") }?.forEach { dir ->
+        dir.listFiles { f -> f.isFile && f.nameWithoutExtension == STOCK_NOTIFICATION }
+            ?.forEach { it.delete() }
+    }
+}
+
+/**
+ * Replaces the stock notification icon with the pack's mark (never stock):
+ * whitened monochrome vector when the pack has one, else generated silhouettes.
+ */
+private fun ResourcePatchContext.applyNotificationIcon(key: String, hasMono: Boolean) {
+    deleteStockNotification()
+    val res = get("res")
+    if (hasMono) {
+        val stream = object {}.javaClass.classLoader.getResourceAsStream(
+            "youtube/branding/$key/monochrome/drawable/$MONO",
+        ) ?: throw PatchException("Bundled resource missing: $key monochrome")
+        val whitened = stream.bufferedReader().readText()
+            .replace("#ff000000", "#ffffffff")
+            .replace("#000000", "#ffffff")
+            .replace("\"#000\"", "\"#fff\"")
+        res.resolve("drawable/$STOCK_NOTIFICATION.xml").apply {
+            parentFile.mkdirs()
+            writeText(whitened)
+        }
+    } else {
+        listOf("mdpi", "hdpi", "xhdpi", "xxhdpi", "xxxhdpi").forEach { density ->
+            copyBundled(
+                "youtube/branding/$key/notification/drawable-$density/$STOCK_NOTIFICATION.png",
+                res.resolve("drawable-$density/$STOCK_NOTIFICATION.png"),
+            )
+        }
+    }
 }
 
 /**
@@ -57,37 +120,14 @@ val logoPacksPatch = resourcePatch(
         key = "customIcon",
         title = "Custom icon",
         description = "Folder with mipmap-<dpi>/morphe_adaptive_{background,foreground}_custom.png " +
-            "(108/162/216/324/432 px). Optional drawable/morphe_adaptive_monochrome_custom.xml.",
+            "(108/162/216/324/432 px). Optional drawable/morphe_adaptive_monochrome_custom.xml " +
+            "and drawable/morphe_notification_icon_custom.xml.",
     )
 
     execute {
         val key = (appIcon ?: "original").lowercase()
         if (key == "original") return@execute
         val res = get("res")
-
-        fun writeLauncherXml(style: String, hasMono: Boolean) {
-            val monoLine = if (hasMono)
-                "\n                <monochrome android:drawable=\"@drawable/morphe_adaptive_monochrome_$style\" />"
-            else ""
-            res.resolve("mipmap-anydpi/morphe_launcher_$style.xml").apply {
-                parentFile.mkdirs()
-                writeText(
-                    "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
-                        "<adaptive-icon xmlns:android=\"http://schemas.android.com/apk/res/android\">\n" +
-                        "                <background android:drawable=\"@mipmap/morphe_adaptive_background_$style\" />\n" +
-                        "                <foreground android:drawable=\"@mipmap/morphe_adaptive_foreground_$style\" />$monoLine\n" +
-                        "            </adaptive-icon>\n",
-                )
-            }
-        }
-
-        fun pointManifestAt(style: String) {
-            document("AndroidManifest.xml").use { doc ->
-                val app = doc.getElementsByTagName("application").item(0) as Element
-                app.setAttribute("android:icon", "@mipmap/morphe_launcher_$style")
-                app.removeAttribute("android:roundIcon")
-            }
-        }
 
         when (key) {
             "custom" -> {
@@ -98,7 +138,7 @@ val logoPacksPatch = resourcePatch(
                 DENSITIES.forEach { density ->
                     listOf("background", "foreground").forEach { role ->
                         dir.resolve("mipmap-$density/morphe_adaptive_${role}_custom.png")
-                            .takeIf { it.exists }?.let {
+                            .takeIf { it.exists() }?.let {
                                 it.copyTo(res.resolve("mipmap-$density/morphe_adaptive_${role}_custom.png"), true)
                                 copied = true
                             }
@@ -113,11 +153,8 @@ val logoPacksPatch = resourcePatch(
                 writeLauncherXml("custom", hasMono)
                 pointManifestAt("custom")
                 dir.resolve("drawable/morphe_notification_icon_custom.xml").takeIf { it.exists() }?.let {
-                    res.listFiles { f -> f.isDirectory && f.name.startsWith("drawable") }?.forEach { d ->
-                        d.listFiles { f -> f.isFile && f.nameWithoutExtension == "ic_stat_yt_notification_logo" }
-                            ?.forEach { it.delete() }
-                    }
-                    it.copyTo(res.resolve("drawable/ic_stat_yt_notification_logo.xml"), true)
+                    deleteStockNotification()
+                    it.copyTo(res.resolve("drawable/$STOCK_NOTIFICATION.xml"), true)
                 }
             }
             in PACKS.values -> {
@@ -146,38 +183,6 @@ val logoPacksPatch = resourcePatch(
                 applyNotificationIcon(key, hasMono)
             }
             else -> throw PatchException("Unknown app icon: $key")
-        }
-    }
-
-    /**
-     * Replaces the stock notification icon with the pack's mark (never stock):
-     * whitened monochrome vector when the pack has one, else generated silhouettes.
-     */
-    fun ResourcePatchContext.applyNotificationIcon(key: String, hasMono: Boolean) {
-        val res = get("res")
-        res.listFiles { f -> f.isDirectory && f.name.startsWith("drawable") }?.forEach { dir ->
-            dir.listFiles { f -> f.isFile && f.nameWithoutExtension == "ic_stat_yt_notification_logo" }
-                ?.forEach { it.delete() }
-        }
-        if (hasMono) {
-            val stream = object {}.javaClass.classLoader.getResourceAsStream(
-                "youtube/branding/$key/monochrome/drawable/$MONO",
-            ) ?: throw PatchException("Bundled resource missing: $key monochrome")
-            val whitened = stream.bufferedReader().readText()
-                .replace("#ff000000", "#ffffffff")
-                .replace("#000000", "#ffffff")
-                .replace("\"#000\"", "\"#fff\"")
-            res.resolve("drawable/ic_stat_yt_notification_logo.xml").apply {
-                parentFile.mkdirs()
-                writeText(whitened)
-            }
-        } else {
-            listOf("mdpi", "hdpi", "xhdpi", "xxhdpi", "xxxhdpi").forEach { density ->
-                copyBundled(
-                    "youtube/branding/$key/notification/drawable-$density/ic_stat_yt_notification_logo.png",
-                    res.resolve("drawable-$density/ic_stat_yt_notification_logo.png"),
-                )
-            }
         }
     }
 }

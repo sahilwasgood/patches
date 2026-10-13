@@ -7,12 +7,15 @@ import app.morphe.patcher.patch.stringOption
 import app.vancedlight.patches.shared.COMPATIBILITY_YOUTUBE
 import java.io.File
 
-private fun ResourcePatchContext.overwriteMatching(bundledDir: String, targetDir: File): Int {
+private fun overwriteMatching(
+    bundledDir: String,
+    targetDir: File,
+    loader: ClassLoader,
+): Int {
     if (!targetDir.isDirectory) return 0
     var n = 0
     targetDir.listFiles { f -> f.isFile }?.forEach { target ->
-        val stream = object {}.javaClass.classLoader
-            .getResourceAsStream("$bundledDir/${targetDir.name}/${target.name}")
+        val stream = loader.getResourceAsStream("$bundledDir/${targetDir.name}/${target.name}")
             ?: return@forEach
         stream.use { src -> target.outputStream().use { src.copyTo(it) } }
         n++
@@ -39,10 +42,11 @@ val shortsButtonsPatch = resourcePatch(
     execute {
         val style = (iconType ?: "cairo").lowercase()
         if (style == "youtube") return@execute
+        val loader = object {}.javaClass.classLoader
         val res = get("res")
         var total = 0
         res.listFiles { f -> f.isDirectory && f.name.startsWith("drawable") }?.forEach { dir ->
-            total += overwriteMatching("youtube/shorts/actionbuttons/$style", dir)
+            total += overwriteMatching("youtube/shorts/actionbuttons/$style", dir, loader)
         }
         if (total == 0) throw PatchException("No Shorts drawables matched style '$style'")
     }
