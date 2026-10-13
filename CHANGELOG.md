@@ -1,3 +1,9 @@
+## [1.0.1](https://github.com/sahilwasgood/patches/compare/v1.0.0...v1.0.1) (2026-10-13)
+
+### 🐛 Bug Fixes
+
+* bundle title and logo pack previews in readme ([bbfdfac](https://github.com/sahilwasgood/patches/commit/bbfdfacf1c7c798b8d053989e07a32f188955b9d))
+
 ## [1.0.1-dev.1](https://github.com/sahilwasgood/patches/compare/v1.0.0...v1.0.1-dev.1) (2026-10-13)
 
 ### 🐛 Bug Fixes
