@@ -3,7 +3,7 @@ group = "app.sahilwasgood"
 patches {
     // TODO: Update this section with your project details.
     about {
-        name = "Patches"
+        name = "sahilwasgood's patches"
         description = "Patches for apps I use: branding presets, button styles and more"
         source = "https://github.com/sahilwasgood/patches"
         author = "sahilwasgood"

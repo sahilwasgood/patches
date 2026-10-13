@@ -22,6 +22,19 @@ styles for YouTube Shorts. Stock leaves the app untouched.
 Custom art. Bring your own icon folder and header folder instead of a preset.
 See the Custom icon and Custom header options inside each patch.
 
+## Logo pack previews
+
+Every preset below is selectable in the App icon option. Match the name,
+then patch.
+
+### YouTube
+
+<img src=".github/assets/preview-yt.png" alt="YouTube logo pack previews" width="720">
+
+### YT Music
+
+<img src=".github/assets/preview-ytm.png" alt="YT Music logo pack previews" width="720">
+
 ## Patches list
 
 <!-- PATCHES_START EXPANDED -->
