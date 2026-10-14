@@ -1,3 +1,9 @@
+## [1.0.6-dev.1](https://github.com/sahilwasgood/patches/compare/v1.0.5...v1.0.6-dev.1) (2026-10-14)
+
+### 🐛 Bug Fixes
+
+* slim bundle, drop unread assets and recompress PNGs ([663a0a8](https://github.com/sahilwasgood/patches/commit/663a0a8074f6224b9d71d056ccab71e39c23105b))
+
 ## [1.0.5](https://github.com/sahilwasgood/patches/compare/v1.0.4...v1.0.5) (2026-10-14)
 
 ### 🐛 Bug Fixes
