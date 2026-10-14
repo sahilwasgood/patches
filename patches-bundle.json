@@ -1,7 +1,7 @@
 {
-  "created_at": "2026-10-14T17:22:39",
-  "description": "## [1.0.4](https://github.com/sahilwasgood/patches/compare/v1.0.3...v1.0.4) (2026-10-14)\n\n### 🐛 Bug Fixes\n\n* mark YouTube 21.41.525 as supported ([7279e97](https://github.com/sahilwasgood/patches/commit/7279e977e824a2b526d17b27328233161af87da4))",
-  "download_url": "https://github.com/sahilwasgood/patches/releases/download/v1.0.4/patches-1.0.4.mpp",
+  "created_at": "2026-10-14T17:37:32",
+  "description": "## [1.0.5-dev.1](https://github.com/sahilwasgood/patches/compare/v1.0.4...v1.0.5-dev.1) (2026-10-14)\n\n### 🐛 Bug Fixes\n\n* mark YouTube 21.41.525 experimental to match upstream ([444cc2d](https://github.com/sahilwasgood/patches/commit/444cc2de9dfaee61013b231ae66c3d776037f883))",
+  "download_url": "https://github.com/sahilwasgood/patches/releases/download/v1.0.5-dev.1/patches-1.0.5-dev.1.mpp",
   "signature_download_url": "",
-  "version": "1.0.4"
+  "version": "1.0.5-dev.1"
 }

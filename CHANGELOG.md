@@ -1,3 +1,9 @@
+## [1.0.5-dev.1](https://github.com/sahilwasgood/patches/compare/v1.0.4...v1.0.5-dev.1) (2026-10-14)
+
+### 🐛 Bug Fixes
+
+* mark YouTube 21.41.525 experimental to match upstream ([444cc2d](https://github.com/sahilwasgood/patches/commit/444cc2de9dfaee61013b231ae66c3d776037f883))
+
 ## [1.0.4](https://github.com/sahilwasgood/patches/compare/v1.0.3...v1.0.4) (2026-10-14)
 
 ### 🐛 Bug Fixes
