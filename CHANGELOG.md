@@ -1,3 +1,9 @@
+## [1.0.3-dev.2](https://github.com/sahilwasgood/patches/compare/v1.0.3-dev.1...v1.0.3-dev.2) (2026-10-14)
+
+### 🐛 Bug Fixes
+
+* shorts remap onto modern names, conflict notes, vanced light folders ([919bfb2](https://github.com/sahilwasgood/patches/commit/919bfb26b69bf7d5be7c88374586e0a76bfb4691))
+
 ## [1.0.3-dev.1](https://github.com/sahilwasgood/patches/compare/v1.0.2...v1.0.3-dev.1) (2026-10-14)
 
 ### 🐛 Bug Fixes
