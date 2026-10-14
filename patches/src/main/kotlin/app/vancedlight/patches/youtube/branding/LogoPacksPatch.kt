@@ -106,6 +106,7 @@ private fun ResourcePatchContext.applyNotificationIcon(key: String, hasMono: Boo
 val logoPacksPatch = resourcePatch(
     name = "Logo packs",
     description = "Applies a preset app icon (all packs incl. Vanced Light). " +
+        "Turn off Morphe's Custom branding patch, both set the launcher icon. " +
         "Use Custom icon with a folder for your own art.",
 ) {
     compatibleWith(COMPATIBILITY_YOUTUBE)

@@ -11,6 +11,7 @@ import app.vancedlight.patches.shared.drawableNames
 val overlayButtonsPatch = resourcePatch(
     name = "Overlay button style",
     description = "Player overlay button style (Bold / Rounded / Thin). " +
+        "Different buttons from Morphe's Player icon style patch, keep both on. " +
         "Files whose references no longer exist in the app are skipped, " +
         "so new app versions degrade to fewer styled buttons instead of failing.",
 ) {

@@ -89,7 +89,8 @@ private fun ResourcePatchContext.applyNotificationIcon(key: String) {
 @Suppress("unused")
 val logoPacksPatch = resourcePatch(
     name = "Logo packs",
-    description = "Applies a preset app icon (all packs incl. Vanced Light).",
+    description = "Applies a preset app icon (all packs incl. Vanced Light). " +
+        "Turn off Morphe's Custom branding patch, both set the launcher icon.",
 ) {
     compatibleWith(COMPATIBILITY_YOUTUBE_MUSIC)
 

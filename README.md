@@ -20,7 +20,8 @@ Shorts buttons. Cairo, Outline, Outline Circle, Round and YouTube Outline
 styles for YouTube Shorts. Stock leaves the app untouched.
 
 Custom art. Bring your own icon folder and header folder instead of a preset.
-See the Custom icon and Custom header options inside each patch.
+See the Custom icon and Custom header options inside each patch. Ready made
+Vanced Light folders live in folders/ in this repo.
 
 ## Logo pack previews
 
