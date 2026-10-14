@@ -1,3 +1,9 @@
+## [1.0.4-dev.1](https://github.com/sahilwasgood/patches/compare/v1.0.3...v1.0.4-dev.1) (2026-10-14)
+
+### 🐛 Bug Fixes
+
+* mark YouTube 21.41.525 as supported ([7279e97](https://github.com/sahilwasgood/patches/commit/7279e977e824a2b526d17b27328233161af87da4))
+
 ## [1.0.3](https://github.com/sahilwasgood/patches/compare/v1.0.2...v1.0.3) (2026-10-14)
 
 ### 🐛 Bug Fixes
