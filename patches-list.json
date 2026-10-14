@@ -1,6 +1,6 @@
 {
   "NOTE": "Do NOT manually edit this file. This file is automatically updated when semantic release (release.yml) runs. Manually editing this file can break your releases and break third party tools that use this file.",
-  "version": "1.0.2",
+  "version": "1.0.3-dev.1",
   "patches": [
     {
       "name": "Logo packs",
@@ -135,7 +135,7 @@
     },
     {
       "name": "Overlay button style",
-      "description": "Player overlay button style (Bold / Rounded / Thin).",
+      "description": "Player overlay button style (Bold / Rounded / Thin). Files whose references no longer exist in the app are skipped, so new app versions degrade to fewer styled buttons instead of failing.",
       "default": true,
       "category": null,
       "compatiblePackages": [
@@ -175,7 +175,7 @@
     },
     {
       "name": "Shorts button style",
-      "description": "Shorts action button style. Stock leaves the app untouched.",
+      "description": "Shorts action button style. Stock leaves the app untouched. Files whose references no longer exist in the app are skipped.",
       "default": true,
       "category": null,
       "compatiblePackages": [

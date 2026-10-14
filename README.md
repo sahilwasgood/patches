@@ -38,7 +38,7 @@ then patch.
 ## Patches list
 
 <!-- PATCHES_START EXPANDED -->
-> **[v1.0.2](https://github.com/sahilwasgood/patches/releases/tag/v1.0.2)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;4 patches total
+> **[v1.0.3-dev.1](https://github.com/sahilwasgood/patches/releases/tag/v1.0.3-dev.1)**&nbsp;&nbsp;•&nbsp;&nbsp;`dev`&nbsp;&nbsp;•&nbsp;&nbsp;4 patches total
 <details open>
 <summary>📦 YT Music&nbsp;&nbsp;•&nbsp;&nbsp;1 patch</summary>
 <br>
@@ -56,8 +56,8 @@ then patch.
 | 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
 |----------|----------------|-----------|
 | [Logo packs](#logo-packs) | Applies a preset app icon (all packs incl. Vanced Light). Use Custom icon with a folder for your own art. | • App icon<br>• Custom icon |
-| [Overlay button style](#overlay-button-style) | Player overlay button style (Bold / Rounded / Thin). | • Button style |
-| [Shorts button style](#shorts-button-style) | Shorts action button style. Stock leaves the app untouched. | • Button style |
+| [Overlay button style](#overlay-button-style) | Player overlay button style (Bold / Rounded / Thin). Files whose references no longer exist in the app are skipped, so new app versions degrade to fewer styled buttons instead of failing. | • Button style |
+| [Shorts button style](#shorts-button-style) | Shorts action button style. Stock leaves the app untouched. Files whose references no longer exist in the app are skipped. | • Button style |
 
 </details>
 

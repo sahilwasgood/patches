@@ -1,3 +1,9 @@
+## [1.0.3-dev.1](https://github.com/sahilwasgood/patches/compare/v1.0.2...v1.0.3-dev.1) (2026-10-14)
+
+### 🐛 Bug Fixes
+
+* skip overlay xmls with dangling drawable refs on new app versions ([66a885c](https://github.com/sahilwasgood/patches/commit/66a885c586ba690ba2b816ed0ab7406ebc14d841))
+
 ## [1.0.2](https://github.com/sahilwasgood/patches/compare/v1.0.1...v1.0.2) (2026-10-14)
 
 ### 🐛 Bug Fixes
