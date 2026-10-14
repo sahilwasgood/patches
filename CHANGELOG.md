@@ -1,3 +1,9 @@
+## [1.0.2-dev.1](https://github.com/sahilwasgood/patches/compare/v1.0.1...v1.0.2-dev.1) (2026-10-14)
+
+### 🐛 Bug Fixes
+
+* drop template example patch from bundle ([0b62133](https://github.com/sahilwasgood/patches/commit/0b6213359268271124862c81a8415fd83cb9c9b0))
+
 ## [1.0.1](https://github.com/sahilwasgood/patches/compare/v1.0.0...v1.0.1) (2026-10-13)
 
 ### 🐛 Bug Fixes
