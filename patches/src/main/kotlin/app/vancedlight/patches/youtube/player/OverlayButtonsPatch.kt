@@ -1,32 +1,18 @@
 package app.vancedlight.patches.youtube.player
 
 import app.morphe.patcher.patch.PatchException
-import app.morphe.patcher.patch.ResourcePatchContext
 import app.morphe.patcher.patch.resourcePatch
 import app.morphe.patcher.patch.stringOption
 import app.vancedlight.patches.shared.COMPATIBILITY_YOUTUBE
-import java.io.File
-
-private fun overwriteMatching(
-    bundledDir: String,
-    targetDir: File,
-    loader: ClassLoader,
-): Int {
-    if (!targetDir.isDirectory) return 0
-    var n = 0
-    targetDir.listFiles { f -> f.isFile }?.forEach { target ->
-        val stream = loader.getResourceAsStream("$bundledDir/${targetDir.name}/${target.name}")
-            ?: return@forEach
-        stream.use { src -> target.outputStream().use { src.copyTo(it) } }
-        n++
-    }
-    return n
-}
+import app.vancedlight.patches.shared.applyBundledDir
+import app.vancedlight.patches.shared.drawableNames
 
 @Suppress("unused")
 val overlayButtonsPatch = resourcePatch(
     name = "Overlay button style",
-    description = "Player overlay button style (Bold / Rounded / Thin).",
+    description = "Player overlay button style (Bold / Rounded / Thin). " +
+        "Files whose references no longer exist in the app are skipped, " +
+        "so new app versions degrade to fewer styled buttons instead of failing.",
 ) {
     compatibleWith(COMPATIBILITY_YOUTUBE)
 
@@ -40,14 +26,24 @@ val overlayButtonsPatch = resourcePatch(
         val style = (iconType ?: "rounded").lowercase()
         val loader = object {}.javaClass.classLoader
         val res = get("res")
-        var total = 0
-        res.listFiles { f -> f.isDirectory && f.name.startsWith("drawable") }?.forEach { dir ->
-            total += overwriteMatching("youtube/overlaybuttons/$style", dir, loader)
+        val have = res.drawableNames()
+        val skipped = mutableListOf<String>()
+        var applied = 0
+        fun resDrawableDirs() =
+            res.listFiles { f -> f.isDirectory && f.name.startsWith("drawable") } ?: emptyArray()
+
+        resDrawableDirs().forEach { dir ->
+            applied += applyBundledDir(loader, "youtube/overlaybuttons/$style", dir, have, skipped)
         }
-        // Shared overlay chrome (background, layouts' drawables).
-        res.listFiles { f -> f.isDirectory && f.name.startsWith("drawable") }?.forEach { dir ->
-            total += overwriteMatching("youtube/overlaybuttons/shared", dir, loader)
+        // Shared overlay chrome (background, selector wrappers).
+        resDrawableDirs().forEach { dir ->
+            applied += applyBundledDir(loader, "youtube/overlaybuttons/shared", dir, have, skipped)
         }
-        if (total == 0) throw PatchException("No overlay drawables matched style '$style'")
+        if (applied == 0) {
+            throw PatchException(
+                "No overlay drawables applied for style '$style'. " +
+                    (skipped.take(5).joinToString("; ").ifEmpty { "No matching files found." }),
+            )
+        }
     }
 }
