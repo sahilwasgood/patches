@@ -21,7 +21,7 @@ val COMPATIBILITY_YOUTUBE = Compatibility(
         "3d7a1223019aa39d9ea0e3436ab7c0896bfb4fb679f4de5fe7c23f326c8f994a"
     ),
     targets = listOf(
-        AppTarget(version = "21.41.525", minSdk = 29),
+        AppTarget(version = "21.41.525", minSdk = 29, isExperimental = true),
         AppTarget(version = "21.40.161", minSdk = 29, isExperimental = true),
         AppTarget(version = "21.39.522", minSdk = 29, isExperimental = true),
         AppTarget(version = "21.38.130", minSdk = 29, isExperimental = true),
