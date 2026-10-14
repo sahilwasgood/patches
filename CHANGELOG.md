@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/sahilwasgood/patches/compare/v1.0.2...v1.0.3) (2026-10-14)
+
+### 🐛 Bug Fixes
+
+* shorts remap onto modern names, conflict notes, vanced light folders ([919bfb2](https://github.com/sahilwasgood/patches/commit/919bfb26b69bf7d5be7c88374586e0a76bfb4691))
+* skip overlay xmls with dangling drawable refs on new app versions ([66a885c](https://github.com/sahilwasgood/patches/commit/66a885c586ba690ba2b816ed0ab7406ebc14d841))
+
 ## [1.0.3-dev.1](https://github.com/sahilwasgood/patches/compare/v1.0.2...v1.0.3-dev.1) (2026-10-14)
 
 ### 🐛 Bug Fixes
