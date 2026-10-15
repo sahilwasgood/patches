@@ -40,7 +40,7 @@ styles for YouTube Shorts. Stock leaves the app untouched.
 ## Patches list
 
 <!-- PATCHES_START EXPANDED -->
-> **[v1.2.1-dev.3](https://github.com/sahilwasgood/patches/releases/tag/v1.2.1-dev.3)**&nbsp;&nbsp;•&nbsp;&nbsp;`dev`&nbsp;&nbsp;•&nbsp;&nbsp;4 patches total
+> **[v1.2.1](https://github.com/sahilwasgood/patches/releases/tag/v1.2.1)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;4 patches total
 <details open>
 <summary>📦 YouTube Music&nbsp;&nbsp;•&nbsp;&nbsp;1 patch</summary>
 <br>

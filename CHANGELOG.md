@@ -1,3 +1,11 @@
+## [1.2.1](https://github.com/sahilwasgood/patches/compare/v1.2.0...v1.2.1) (2026-10-15)
+
+### 🐛 Bug Fixes
+
+* drop test clips, keep PNG previews ([b9de5ce](https://github.com/sahilwasgood/patches/commit/b9de5ce9a4ab68931a08e0af2e3cc11560525e0a))
+* morphing test clip for mmt preview row ([98a378d](https://github.com/sahilwasgood/patches/commit/98a378d8136511b0ea8d9546bc317566a2bc074f))
+* video only previews for two packs to exercise clip path ([15a9058](https://github.com/sahilwasgood/patches/commit/15a9058d5083467dcc7aaa6574ea9c8b5d8da603))
+
 ## [1.2.1-dev.3](https://github.com/sahilwasgood/patches/compare/v1.2.1-dev.2...v1.2.1-dev.3) (2026-10-15)
 
 ### 🐛 Bug Fixes
