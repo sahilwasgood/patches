@@ -1,3 +1,9 @@
+## [1.2.0-dev.2](https://github.com/sahilwasgood/patches/compare/v1.2.0-dev.1...v1.2.0-dev.2) (2026-10-15)
+
+### 🐛 Bug Fixes
+
+* drop broken auto PR workflow, merges are done by hand ([702ef92](https://github.com/sahilwasgood/patches/commit/702ef92a3af55e2961fea2cb19be3a9652498af5))
+
 ## [1.2.0-dev.1](https://github.com/sahilwasgood/patches/compare/v1.1.0...v1.2.0-dev.1) (2026-10-15)
 
 ### ✨ New Features
