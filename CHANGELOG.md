@@ -1,3 +1,9 @@
+## [1.2.0-dev.1](https://github.com/sahilwasgood/patches/compare/v1.1.0...v1.2.0-dev.1) (2026-10-15)
+
+### ✨ New Features
+
+* ship real preview art and clips for preset thumbnails ([a55c42f](https://github.com/sahilwasgood/patches/commit/a55c42fde1079afb18ed998ac33bf9a52aea6aca))
+
 ## [1.1.0](https://github.com/sahilwasgood/patches/compare/v1.0.7...v1.1.0) (2026-10-15)
 
 ### ✨ New Features
