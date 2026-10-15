@@ -1,3 +1,9 @@
+## [1.2.1-dev.3](https://github.com/sahilwasgood/patches/compare/v1.2.1-dev.2...v1.2.1-dev.3) (2026-10-15)
+
+### 🐛 Bug Fixes
+
+* drop test clips, keep PNG previews ([b9de5ce](https://github.com/sahilwasgood/patches/commit/b9de5ce9a4ab68931a08e0af2e3cc11560525e0a))
+
 ## [1.2.1-dev.2](https://github.com/sahilwasgood/patches/compare/v1.2.1-dev.1...v1.2.1-dev.2) (2026-10-15)
 
 ### 🐛 Bug Fixes
