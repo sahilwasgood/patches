@@ -1,3 +1,9 @@
+## [1.2.1-dev.1](https://github.com/sahilwasgood/patches/compare/v1.2.0...v1.2.1-dev.1) (2026-10-15)
+
+### 🐛 Bug Fixes
+
+* video only previews for two packs to exercise clip path ([15a9058](https://github.com/sahilwasgood/patches/commit/15a9058d5083467dcc7aaa6574ea9c8b5d8da603))
+
 ## [1.2.0](https://github.com/sahilwasgood/patches/compare/v1.1.0...v1.2.0) (2026-10-15)
 
 ### 🐛 Bug Fixes
