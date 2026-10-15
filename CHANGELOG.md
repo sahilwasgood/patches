@@ -1,3 +1,9 @@
+## [1.1.0-dev.1](https://github.com/sahilwasgood/patches/compare/v1.0.7...v1.1.0-dev.1) (2026-10-15)
+
+### ✨ New Features
+
+* bundle preset preview art for manager thumbnails ([9aeeecc](https://github.com/sahilwasgood/patches/commit/9aeeecc4c6e50cd65209d4913faacb344009123e))
+
 ## [1.0.7](https://github.com/sahilwasgood/patches/compare/v1.0.6...v1.0.7) (2026-10-15)
 
 ### 🐛 Bug Fixes
