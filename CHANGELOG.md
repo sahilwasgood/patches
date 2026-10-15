@@ -1,3 +1,9 @@
+## [1.2.1-dev.2](https://github.com/sahilwasgood/patches/compare/v1.2.1-dev.1...v1.2.1-dev.2) (2026-10-15)
+
+### 🐛 Bug Fixes
+
+* morphing test clip for mmt preview row ([98a378d](https://github.com/sahilwasgood/patches/commit/98a378d8136511b0ea8d9546bc317566a2bc074f))
+
 ## [1.2.1-dev.1](https://github.com/sahilwasgood/patches/compare/v1.2.0...v1.2.1-dev.1) (2026-10-15)
 
 ### 🐛 Bug Fixes
