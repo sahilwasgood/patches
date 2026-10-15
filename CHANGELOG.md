@@ -1,3 +1,9 @@
+## [1.0.7-dev.1](https://github.com/sahilwasgood/patches/compare/v1.0.6...v1.0.7-dev.1) (2026-10-15)
+
+### 🐛 Bug Fixes
+
+* tighten descriptions and comments ([f0e1c65](https://github.com/sahilwasgood/patches/commit/f0e1c65bc29b9374f1e1c751621366bf5600f85e))
+
 ## [1.0.6](https://github.com/sahilwasgood/patches/compare/v1.0.5...v1.0.6) (2026-10-14)
 
 ### 🐛 Bug Fixes
