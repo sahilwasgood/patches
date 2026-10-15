@@ -34,7 +34,7 @@ fun copyBundledBytes(loader: ClassLoader, path: String, target: File) {
  * Overwrites same-named files of one decoded res dir with bundled counterparts.
  * PNGs are inherently safe (same file replaced). XMLs are validated first:
  * every drawable they reference must already exist in the decoded resources,
- * otherwise the file is skipped (stock renamed something under us — version
+ * otherwise the file is skipped (stock renamed something in a newer app version,
  * drift) instead of shipping a dangling reference that kills resource encoding.
  *
  * Returns applied count; appends human readable skip reasons to [skipped].
