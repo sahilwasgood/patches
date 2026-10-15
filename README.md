@@ -39,7 +39,7 @@ then patch.
 ## Patches list
 
 <!-- PATCHES_START EXPANDED -->
-> **[v1.0.6](https://github.com/sahilwasgood/patches/releases/tag/v1.0.6)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;4 patches total
+> **[v1.0.7](https://github.com/sahilwasgood/patches/releases/tag/v1.0.7)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;4 patches total
 <details open>
 <summary>📦 YouTube Music&nbsp;&nbsp;•&nbsp;&nbsp;1 patch</summary>
 <br>
@@ -67,7 +67,7 @@ then patch.
 | 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
 |----------|----------------|-----------|
 | [Logo packs](#logo-packs) | Applies a preset app icon (all packs incl. Vanced Light). Turn off Morphe's Custom branding patch, both set the launcher icon. Use Custom icon with a folder for your own art. | • App icon<br>• Custom icon |
-| [Overlay button style](#overlay-button-style) | Player overlay button style (Bold / Rounded / Thin). Different buttons from Morphe's Player icon style patch, keep both on. Files whose references no longer exist in the app are skipped, so new app versions degrade to fewer styled buttons instead of failing. | • Button style |
+| [Overlay button style](#overlay-button-style) | Player overlay button style (Bold, Rounded, Thin). Covers different buttons than Morphe's Player icon style, keep both on. Files that reference renamed drawables are skipped, so new app versions degrade to fewer styled buttons instead of failing. | • Button style |
 | [Shorts button style](#shorts-button-style) | Shorts action button style. Stock leaves the app untouched. Turn off Morphe's Shorts icon style patch, both style the same buttons. | • Button style |
 
 </details>
