@@ -1,13 +1,31 @@
 # Patches
 
-Branding presets for YouTube and YT Music. Pick a logo pack, a button style,
-patch, install. Works with Morphe Manager and Morphe Desktop.
+Preset icon packs, headers and button styles for YouTube and YT Music.
 
 <p align="center">
   <a href="https://morphe.software/add-source?github=sahilwasgood/patches">
     <img src=".github/assets/add-to-manager.svg" alt="Add to Morphe" width="380">
   </a>
 </p>
+
+## Preview
+
+### YouTube
+
+<img src=".github/assets/preview-yt.png" alt="YouTube logo pack previews" width="720">
+
+### YT Music
+
+<img src=".github/assets/preview-ytm.png" alt="YT Music logo pack previews" width="720">
+
+## Quickstart
+
+1. Tap the button above to add this source in Morphe Manager.
+2. Pick YouTube or YT Music and select the patches.
+3. Choose a preset in each App icon or Button style option, then patch and install.
+
+<details>
+<summary>Contents, patch list, custom art, build, license</summary>
 
 ## Included
 
@@ -18,23 +36,6 @@ Overlay buttons. Bold, Rounded and Thin player button styles for YouTube.
 
 Shorts buttons. Cairo, Outline, Outline Circle, Round and YouTube Outline
 styles for YouTube Shorts. Stock leaves the app untouched.
-
-Custom art. Bring your own icon folder and header folder instead of a preset.
-See the Custom icon and Custom header options inside each patch. Ready made
-Vanced Light folders live in folders/ in this repo.
-
-## Logo pack previews
-
-Every preset below is selectable in the App icon option. Match the name,
-then patch.
-
-### YouTube
-
-<img src=".github/assets/preview-yt.png" alt="YouTube logo pack previews" width="720">
-
-### YT Music
-
-<img src=".github/assets/preview-ytm.png" alt="YT Music logo pack previews" width="720">
 
 ## Patches list
 
@@ -74,6 +75,12 @@ then patch.
 
 <!-- PATCHES_END -->
 
+## Custom art
+
+Bring your own icon folder and header folder instead of a preset.
+See the Custom icon and Custom header options inside each patch. Ready made
+Vanced Light folders live in folders/ in this repo.
+
 ## Build it yourself
 
 Needs Java 21 and `./gradlew buildAndroid`. The bundle lands in
@@ -83,3 +90,5 @@ Needs Java 21 and `./gradlew buildAndroid`. The bundle lands in
 ## License
 
 GPLv3. See [LICENSE](LICENSE).
+
+</details>
