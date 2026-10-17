@@ -1,3 +1,9 @@
+## [1.2.2](https://github.com/sahilwasgood/patches/compare/v1.2.1...v1.2.2) (2026-10-17)
+
+### 🐛 Bug Fixes
+
+* restore png previews for mmt and afn_blue ([b240936](https://github.com/sahilwasgood/patches/commit/b2409364bfba789f3912c4c33716e3b9ecd84844))
+
 ## [1.2.1](https://github.com/sahilwasgood/patches/compare/v1.2.0...v1.2.1) (2026-10-15)
 
 ### 🐛 Bug Fixes
