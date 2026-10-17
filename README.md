@@ -37,6 +37,13 @@ Overlay buttons. Bold, Rounded and Thin player button styles for YouTube.
 Shorts buttons. Cairo, Outline, Outline Circle, Round and YouTube Outline
 styles for YouTube Shorts. Stock leaves the app untouched.
 
+## Preview files
+
+previews/ holds one PNG per logo pack, shown beside each preset name by tools
+that read this bundle. Layout: previews/<package>/<optionKey>/<pack>.png.
+Video clips (mp4, webm) in the same path play as a muted loop instead; a pack
+opts in by adding a clip and dropping its PNG.
+
 ## Patches list
 
 <!-- PATCHES_START EXPANDED -->
