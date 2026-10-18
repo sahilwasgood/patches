@@ -9,7 +9,7 @@ import app.vancedlight.patches.shared.COMPATIBILITY_YOUTUBE_MUSIC
 import org.w3c.dom.Element
 import java.io.File
 
-private val PACKS = mapOf(
+internal val PACKS = mapOf(
     "AFN Blue" to "afn_blue", "AFN Red" to "afn_red",
     "MMT" to "mmt", "MMT Blue" to "mmt_blue", "MMT Green" to "mmt_green",
     "MMT Orange" to "mmt_orange", "MMT Pink" to "mmt_pink",
@@ -19,14 +19,21 @@ private val PACKS = mapOf(
     "Xisr Yellow" to "xisr_yellow",
 )
 
-private val DENSITIES = listOf("mdpi", "hdpi", "xhdpi", "xxhdpi", "xxxhdpi")
+internal val DENSITIES = listOf("mdpi", "hdpi", "xhdpi", "xxhdpi", "xxxhdpi")
+
+/** Stock Music app bar logos, one set per density. */
+internal val MUSIC_HEADER_NAMES = listOf(
+    "action_bar_logo.png",
+    "logo_music.png",
+    "ytm_logo.png",
+)
 
 private const val BG = "adaptiveproduct_youtube_music_background_color_108.png"
 private const val FG = "adaptiveproduct_youtube_music_foreground_color_108.png"
 private const val MONO = "ic_app_icons_themed_youtube_music.xml"
 private const val STOCK_NOTIFICATION = "music_push_notification_white"
 
-private fun copyBundled(path: String, target: File) {
+internal fun copyBundled(path: String, target: File) {
     val stream = object {}.javaClass.classLoader.getResourceAsStream(path)
         ?: throw PatchException("Bundled resource missing: $path")
     target.parentFile.mkdirs()

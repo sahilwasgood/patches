@@ -9,7 +9,7 @@ import app.vancedlight.patches.shared.COMPATIBILITY_YOUTUBE
 import org.w3c.dom.Element
 import java.io.File
 
-private val PACKS = mapOf(
+internal val PACKS = mapOf(
     "AFN Blue" to "afn_blue", "AFN Red" to "afn_red",
     "MMT" to "mmt", "MMT Blue" to "mmt_blue", "MMT Green" to "mmt_green",
     "MMT Orange" to "mmt_orange", "MMT Pink" to "mmt_pink",
@@ -22,14 +22,22 @@ private val PACKS = mapOf(
     "Xisr Yellow" to "xisr_yellow", "YouTube Black" to "youtube_black",
 )
 
-private val DENSITIES = listOf("mdpi", "hdpi", "xhdpi", "xxhdpi", "xxxhdpi")
+internal val DENSITIES = listOf("mdpi", "hdpi", "xhdpi", "xxhdpi", "xxxhdpi")
+
+/** Stock header wordmarks with their theme suffix, one set per density. */
+internal val HEADER_NAMES = listOf(
+    "yt_premium_wordmark_header_dark.png",
+    "yt_premium_wordmark_header_light.png",
+    "yt_wordmark_header_dark.png",
+    "yt_wordmark_header_light.png",
+)
 
 private const val BG = "adaptiveproduct_youtube_background_color_108.png"
 private const val FG = "adaptiveproduct_youtube_foreground_color_108.png"
 private const val MONO = "adaptive_monochrome_ic_youtube_launcher.xml"
 private const val STOCK_NOTIFICATION = "ic_stat_yt_notification_logo"
 
-private fun copyBundled(path: String, target: File) {
+internal fun copyBundled(path: String, target: File) {
     val stream = object {}.javaClass.classLoader.getResourceAsStream(path)
         ?: throw PatchException("Bundled resource missing: $path")
     target.parentFile.mkdirs()
