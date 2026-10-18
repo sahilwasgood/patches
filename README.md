@@ -37,6 +37,10 @@ Overlay buttons. Bold, Rounded and Thin player button styles for YouTube.
 Shorts buttons. Cairo, Outline, Outline Circle, Round and YouTube Outline
 styles for YouTube Shorts. Stock leaves the app untouched.
 
+Header packs. Preset header logo (top left) matched to each logo pack, for
+YouTube and YT Music. Turn off Morphe's Change header patch, both replace
+the same files. Stock leaves the header untouched.
+
 ## Preview files
 
 previews/ holds one PNG per logo pack, shown beside each preset name by tools
