@@ -51,7 +51,7 @@ opts in by adding a clip and dropping its PNG.
 ## Patches list
 
 <!-- PATCHES_START EXPANDED -->
-> **[v1.3.0-dev.1](https://github.com/sahilwasgood/patches/releases/tag/v1.3.0-dev.1)**&nbsp;&nbsp;•&nbsp;&nbsp;`dev`&nbsp;&nbsp;•&nbsp;&nbsp;6 patches total
+> **[v1.3.0](https://github.com/sahilwasgood/patches/releases/tag/v1.3.0)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;6 patches total
 <details open>
 <summary>📦 YouTube Music&nbsp;&nbsp;•&nbsp;&nbsp;2 patches</summary>
 <br>
