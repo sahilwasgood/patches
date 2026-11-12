@@ -1,9 +1,7 @@
-package app.vancedlight.patches.tradingview
+package tradingview.patches
 
 import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
 import app.morphe.patcher.patch.bytecodePatch
-import app.morphe.patcher.util.matchSingle
-import app.vancedlight.patches.shared.COMPATIBILITY_TRADINGVIEW
 
 private const val EXTENSION_CLASS = "Lapp/template/extension/tradingview/ChartLayouts;"
 
@@ -17,7 +15,7 @@ val unlockChartLayoutsPatch = bytecodePatch(
     extendWith("extensions/extension.mpe")
 
     execute {
-        InitWebViewFingerprint.matchSingle().method.addInstructions(
+        InitWebViewFingerprint.method.addInstructions(
             0,
             "invoke-static { p1 }, $EXTENSION_CLASS->addLayoutLimitScript(Landroid/webkit/WebView;)V",
         )

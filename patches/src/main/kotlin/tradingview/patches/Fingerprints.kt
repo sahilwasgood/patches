@@ -1,4 +1,4 @@
-package app.vancedlight.patches.tradingview
+package tradingview.patches
 
 import app.morphe.patcher.Fingerprint
 import com.android.tools.smali.dexlib2.AccessFlags
@@ -19,7 +19,6 @@ object InitWebViewFingerprint : Fingerprint(
 object ProPlanDefineFingerprint : Fingerprint(
     definingClass = "Lcom/tradingview/tradingviewapp/feature/profile/api/plan/ProPlan\$Companion;",
     name = "define",
-    isStatic = false,
     returnType = "Lcom/tradingview/tradingviewapp/feature/profile/api/plan/ProPlan;",
     parameters = listOf("Ljava/lang/String;"),
 )
@@ -30,7 +29,7 @@ object ProPlanDefineFingerprint : Fingerprint(
 object ToPlanStateFingerprint : Fingerprint(
     definingClass = "Lcom/tradingview/tradingviewapp/feature/profile/impl/interactor/UserStateInteractorImplKt;",
     name = "toPlanState",
-    isStatic = true,
+    accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.STATIC, AccessFlags.FINAL),
     returnType = "Lcom/tradingview/tradingviewapp/feature/profile/api/plan/UserPlanState;",
     parameters = listOf("Lcom/tradingview/tradingviewapp/feature/profile/api/user/CurrentUser;"),
 )
@@ -41,7 +40,6 @@ object ToPlanStateFingerprint : Fingerprint(
 object GetUserBadgeTypeFingerprint : Fingerprint(
     definingClass = "Lcom/tradingview/tradingviewapp/feature/profile/api/user/CurrentUser;",
     name = "getUserBadgeType",
-    isStatic = false,
     returnType = "Lcom/tradingview/tradingviewapp/feature/profile/model/user/UserBadgeType;",
     parameters = listOf(),
 )
@@ -52,7 +50,6 @@ object GetUserBadgeTypeFingerprint : Fingerprint(
 object AreAdsAvailableFingerprint : Fingerprint(
     definingClass = "Lcom/tradingview/tradingviewapp/feature/ads/impl/entity/AdsInitializationEntity;",
     name = "areAdsAvailable",
-    isStatic = false,
     returnType = "Z",
     parameters = listOf(
         "Z",
@@ -68,7 +65,6 @@ object AreAdsAvailableFingerprint : Fingerprint(
 object ShowGoProAdFingerprint : Fingerprint(
     definingClass = "Lcom/tradingview/tradingviewapp/feature/ads/api/view/AdvertisementContainerView;",
     name = "showGoProAd",
-    isStatic = false,
     returnType = "V",
     parameters = listOf(),
 )
@@ -118,7 +114,6 @@ object GetProfileBannerFingerprint : Fingerprint(
 object AnalyticsSendEventFingerprint : Fingerprint(
     definingClass = "Lcom/tradingview/tradingviewapp/feature/analytics/impl/services/AnalyticsServiceImpl;",
     name = "sendEvent",
-    isStatic = false,
     returnType = "V",
     parameters = listOf(
         "Lcom/tradingview/tradingviewapp/feature/analytics/api/base/AnalyticSendEvent;",
@@ -132,7 +127,6 @@ object AnalyticsSendEventFingerprint : Fingerprint(
 object FirebaseLogEventFingerprint : Fingerprint(
     definingClass = "Lcom/tradingview/tradingviewapp/feature/analytics/impl/firebase/FirebaseAnalyticsWrapper;",
     name = "logEvent",
-    isStatic = false,
     returnType = "V",
     parameters = listOf(
         "Lcom/tradingview/tradingviewapp/feature/analytics/api/base/AnalyticSendEvent;",

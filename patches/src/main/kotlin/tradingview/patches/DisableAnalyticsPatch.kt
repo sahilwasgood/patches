@@ -1,9 +1,7 @@
-package app.vancedlight.patches.tradingview
+package tradingview.patches
 
+import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
 import app.morphe.patcher.patch.bytecodePatch
-import app.morphe.patcher.util.matchSingle
-import app.morphe.patcher.util.returnEarly
-import app.vancedlight.patches.shared.COMPATIBILITY_TRADINGVIEW
 
 @Suppress("unused")
 val disableAnalyticsPatch = bytecodePatch(
@@ -14,7 +12,13 @@ val disableAnalyticsPatch = bytecodePatch(
     compatibleWith(COMPATIBILITY_TRADINGVIEW)
 
     execute {
-        AnalyticsSendEventFingerprint.matchSingle().method.returnEarly()
-        FirebaseLogEventFingerprint.matchSingle().method.returnEarly()
+        AnalyticsSendEventFingerprint.method.addInstructions(
+            0,
+            "return-void"
+        )
+        FirebaseLogEventFingerprint.method.addInstructions(
+            0,
+            "return-void"
+        )
     }
 }
