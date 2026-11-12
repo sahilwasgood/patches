@@ -8,8 +8,7 @@ private const val EXTENSION_CLASS = "Lapp/template/extension/tradingview/Watchli
 @Suppress("unused")
 val watchlistSyncPatch = bytecodePatch(
     name = "Watchlist Cloud Sync & Manager",
-    description = "Syncs watchlists across Desktop Extension, Android, and Cloudflare Worker. " +
-        "Adds an in-app floating sync manager with real-time bidirectional sync and custom watchlists.",
+    description = "Replaces TradingView's watchlist backend with our Cloudflare synced storage directly in the native TradingView watchlist UI.",
     default = true,
 ) {
     compatibleWith(COMPATIBILITY_TRADINGVIEW)

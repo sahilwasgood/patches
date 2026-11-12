@@ -1,62 +1,417 @@
 /**
- * TradingView Morphe Android Webview Sync Engine & Feature Suite
- * Seamless bidirectional sync with Cloudflare Worker & Desktop Extension
+ * TradingView Morphe Android Native Watchlist Backend Proxy
+ * - Replaces TradingView's backend for Watchlists with our synchronized Cloudflare/local store.
+ * - ZERO injected buttons or drawers — utilizes TradingView's own native frontend watchlist UI!
+ * - Unlocks multi-chart layouts up to 8 panes.
  */
 (function () {
-  if (window.__tvSyncExtensionInjected) return;
-  window.__tvSyncExtensionInjected = true;
+  if (window.__tvBackendProxyInjected) return;
+  window.__tvBackendProxyInjected = true;
 
   const DEFAULT_WORKER_URL = "https://tradingview-sync-worker.pubgnewstatevpn99.workers.dev";
-  const STORAGE_KEY_CONFIG = "morphe_tv_sync_config_v1";
+  const STORAGE_KEY_PASSKEY = "tv_sync_passkey";
   const STORAGE_KEY_WATCHLISTS = "morphe_tv_custom_watchlists_v1";
+  const STORAGE_KEY_CONFIG = "morphe_tv_sync_config_v1";
+  const STORAGE_KEY_ACTIVE_ID = "morphe_tv_active_watchlist_id";
 
-  // Load persistent configuration
-  function loadConfig() {
+  // --- 1. Persistence & Configuration ---
+  function getPasskey() {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY_CONFIG);
-      if (raw) return JSON.parse(raw);
-    } catch (e) {
-      console.warn("[TVSync] Failed to load config:", e);
-    }
-    return {
-      workerUrl: DEFAULT_WORKER_URL,
-      syncToken: "",
-      autoSync: true,
-      lastSyncTime: 0
-    };
+      const p = localStorage.getItem(STORAGE_KEY_PASSKEY);
+      if (p && p.trim()) return p.trim();
+      const cfg = JSON.parse(localStorage.getItem(STORAGE_KEY_CONFIG) || "{}");
+      if (cfg.syncToken && cfg.syncToken.trim()) return cfg.syncToken.trim();
+    } catch (_) {}
+    return "";
   }
 
-  function saveConfig(cfg) {
+  function setPasskey(val) {
+    if (!val) return;
     try {
+      localStorage.setItem(STORAGE_KEY_PASSKEY, val.trim());
+      const cfg = JSON.parse(localStorage.getItem(STORAGE_KEY_CONFIG) || "{}");
+      cfg.syncToken = val.trim();
       localStorage.setItem(STORAGE_KEY_CONFIG, JSON.stringify(cfg));
-    } catch (e) {
-      console.warn("[TVSync] Failed to save config:", e);
-    }
+    } catch (_) {}
   }
 
-  function loadWatchlists() {
+  function loadLocalWatchlists() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY_WATCHLISTS);
-      if (raw) return JSON.parse(raw);
-    } catch (e) {
-      console.warn("[TVSync] Failed to load watchlists:", e);
-    }
-    return [];
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch (_) {}
+    return [
+      {
+        id: 1001,
+        type: "custom",
+        name: "Watchlist",
+        active: true,
+        color: null,
+        created: Math.floor(Date.now() / 1000),
+        modified: Math.floor(Date.now() / 1000),
+        symbols: [
+          "###Indices",
+          "SP:SPX",
+          "TVC:NDQ",
+          "TVC:DJI",
+          "CBOE:VIX",
+          "###Crypto",
+          "BITSTAMP:BTCUSD",
+          "BINANCE:BTCUSDT",
+          "BITSTAMP:ETHUSD",
+          "###Tech",
+          "NASDAQ:AAPL",
+          "NASDAQ:TSLA",
+          "NASDAQ:NVDA"
+        ]
+      }
+    ];
   }
 
-  function saveWatchlists(list) {
+  function saveLocalWatchlists(list) {
     try {
       localStorage.setItem(STORAGE_KEY_WATCHLISTS, JSON.stringify(list));
-    } catch (e) {
-      console.warn("[TVSync] Failed to save watchlists:", e);
+    } catch (_) {}
+  }
+
+  function getActiveId() {
+    try {
+      return localStorage.getItem(STORAGE_KEY_ACTIVE_ID);
+    } catch (_) {
+      return null;
     }
   }
 
-  let config = loadConfig();
-  let watchlists = loadWatchlists();
+  function setActiveId(id) {
+    try {
+      localStorage.setItem(STORAGE_KEY_ACTIVE_ID, String(id));
+    } catch (_) {}
+  }
+
+  let localLists = loadLocalWatchlists();
+  let lastSyncTime = 0;
   let isSyncing = false;
 
-  // --- Multi-Chart Layouts Unlock Hook ---
+  // Normalizes list into TradingView API format
+  function formatAsTvLists() {
+    const activeId = getActiveId();
+    const passkey = getPasskey();
+
+    let out = localLists.map((wl, idx) => {
+      const id = wl.id ? (typeof wl.id === "string" && /^\d+$/.test(wl.id) ? parseInt(wl.id, 10) : wl.id) : (idx + 1000);
+      const isActive = activeId ? String(id) === String(activeId) : idx === 0;
+      const symbols = Array.isArray(wl.symbols) ? wl.symbols : (Array.isArray(wl.stocks) ? wl.stocks : []);
+      return {
+        id: id,
+        type: "custom",
+        name: wl.name || ("Watchlist " + (idx + 1)),
+        active: isActive,
+        color: wl.color || null,
+        created: wl.created || Math.floor(Date.now() / 1000),
+        modified: wl.modified || Math.floor(Date.now() / 1000),
+        symbols: symbols
+      };
+    });
+
+    // If passkey is not set yet, prepend a clean helper watchlist
+    if (!passkey) {
+      out.unshift({
+        id: 999999999,
+        type: "custom",
+        name: "⚙️ Setup Cloud Sync Passkey",
+        active: false,
+        color: null,
+        created: Math.floor(Date.now() / 1000),
+        modified: Math.floor(Date.now() / 1000),
+        symbols: ["###Tap this list to enter your desktop passkey"]
+      });
+    }
+
+    return out;
+  }
+
+  // --- 2. Cloudflare Sync Engine (Bidirectional) ---
+  async function syncWithCloudflare(direction = "pull") {
+    const passkey = getPasskey();
+    if (!passkey || isSyncing) return;
+    isSyncing = true;
+
+    try {
+      if (direction === "pull") {
+        const res = await fetch(`${DEFAULT_WORKER_URL}/api/sync`, {
+          headers: { "x-sync-token": passkey }
+        });
+        if (res.ok) {
+          const remote = await res.json();
+          const remoteTime = Number(remote.timestamp) || 0;
+          if (remote.watchlists && Array.isArray(remote.watchlists) && remote.watchlists.length > 0) {
+            localLists = remote.watchlists.map((w, i) => ({
+              id: w.id || (i + 1000),
+              type: "custom",
+              name: w.name || ("Watchlist " + (i + 1)),
+              active: i === 0,
+              color: w.color || null,
+              created: w.created || Math.floor(Date.now() / 1000),
+              modified: w.modified || Math.floor(Date.now() / 1000),
+              symbols: Array.isArray(w.stocks) ? w.stocks : (Array.isArray(w.symbols) ? w.symbols : [])
+            }));
+            saveLocalWatchlists(localLists);
+            lastSyncTime = remoteTime;
+          }
+        }
+      } else if (direction === "push") {
+        const now = Date.now();
+        const payload = {
+          timestamp: now,
+          watchlists: localLists.map(w => ({
+            id: w.id,
+            name: w.name,
+            stocks: w.symbols || w.stocks || [],
+            stockNotes: w.stockNotes || {}
+          })),
+          client: "android-morphe-proxy"
+        };
+        await fetch(`${DEFAULT_WORKER_URL}/api/sync`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-sync-token": passkey
+          },
+          body: JSON.stringify(payload)
+        });
+        lastSyncTime = now;
+      }
+    } catch (e) {
+      console.warn("[TVBackendProxy] Sync error:", e);
+    } finally {
+      isSyncing = false;
+    }
+  }
+
+  // Pull on startup and periodically (every 60s)
+  setTimeout(() => syncWithCloudflare("pull"), 1000);
+  setInterval(() => syncWithCloudflare("pull"), 60000);
+
+  // --- 3. URL Router for TradingView Symbols List API ---
+  function matchSymbolsListUrl(url) {
+    if (!url) return null;
+    const s = String(url).split("?")[0].split("#")[0];
+    if (!s.includes("/symbols_list")) return null;
+
+    if (/\/api\/v1\/symbols_list\/(custom|all)?\/?$/i.test(s)) return { type: "LIST" };
+    if (/\/api\/v1\/symbols_list\/active\/?$/i.test(s)) return { type: "ACTIVE" };
+    let m = s.match(/\/api\/v1\/symbols_list\/custom\/([^\/]+)\/append\/?/i);
+    if (m) return { type: "APPEND", id: m[1] };
+    m = s.match(/\/api\/v1\/symbols_list\/custom\/([^\/]+)\/delete_symbols\/?/i);
+    if (m) return { type: "DELETE_SYMBOLS", id: m[1] };
+    m = s.match(/\/api\/v1\/symbols_list\/custom\/([^\/]+)\/rename\/?/i);
+    if (m) return { type: "RENAME", id: m[1] };
+    m = s.match(/\/api\/v1\/symbols_list\/custom\/([^\/]+)\/?$/i);
+    if (m) return { type: "ITEM", id: m[1] };
+    if (/\/api\/v1\/symbols_list/i.test(s)) return { type: "LIST" };
+    return null;
+  }
+
+  // --- 4. Request Handler ---
+  function handleSymbolsListRequest(method, match, body) {
+    method = (method || "GET").toUpperCase();
+    const lists = formatAsTvLists();
+
+    // Trigger passkey prompt when setup list is selected
+    if (match.id === "999999999" || (body && (body.id == 999999999 || String(body).includes("999999999")))) {
+      setTimeout(() => {
+        const currentKey = getPasskey();
+        const key = prompt("Enter Cloud Sync Passkey (from Desktop Extension):", currentKey);
+        if (key && key.trim()) {
+          setPasskey(key.trim());
+          syncWithCloudflare("pull");
+        }
+      }, 100);
+    }
+
+    if (match.type === "LIST") {
+      if (method === "GET") {
+        return { status: 200, data: lists };
+      }
+      if (method === "POST") {
+        let parsed = {};
+        try { parsed = typeof body === "string" ? JSON.parse(body) : (body || {}); } catch (_) {}
+        const name = (parsed.name || "New Watchlist").trim();
+
+        if (name.toLowerCase().startsWith("sync:")) {
+          const key = name.slice(5).trim();
+          if (key) {
+            setPasskey(key);
+            syncWithCloudflare("pull");
+          }
+        }
+
+        const newId = Date.now();
+        const newWl = {
+          id: newId,
+          type: "custom",
+          name: name,
+          active: true,
+          color: null,
+          created: Math.floor(Date.now() / 1000),
+          modified: Math.floor(Date.now() / 1000),
+          symbols: Array.isArray(parsed.symbols) ? parsed.symbols : []
+        };
+        localLists.push(newWl);
+        setActiveId(newId);
+        saveLocalWatchlists(localLists);
+        syncWithCloudflare("push");
+        return { status: 200, data: newWl };
+      }
+    }
+
+    if (match.type === "ACTIVE") {
+      if (method === "GET") {
+        const active = lists.find(l => l.active) || lists[0];
+        return { status: 200, data: active };
+      }
+      if (method === "POST" || method === "PUT") {
+        let parsed = {};
+        try { parsed = typeof body === "string" ? JSON.parse(body) : (body || {}); } catch (_) {}
+        if (parsed.id) setActiveId(parsed.id);
+        return { status: 200, data: { status: "ok" } };
+      }
+    }
+
+    if (match.type === "ITEM") {
+      const targetId = match.id;
+      const target = localLists.find(l => String(l.id) === String(targetId));
+
+      if (method === "GET") {
+        if (target) return { status: 200, data: target };
+        return { status: 200, data: lists[0] || {} };
+      }
+      if (method === "DELETE") {
+        localLists = localLists.filter(l => String(l.id) !== String(targetId));
+        saveLocalWatchlists(localLists);
+        syncWithCloudflare("push");
+        return { status: 200, data: { status: "ok" } };
+      }
+      if (method === "PUT" || method === "POST") {
+        let parsed = {};
+        try { parsed = typeof body === "string" ? JSON.parse(body) : (body || {}); } catch (_) {}
+        if (target) {
+          if (parsed.name) target.name = parsed.name;
+          if (Array.isArray(parsed.symbols)) target.symbols = parsed.symbols;
+          target.modified = Math.floor(Date.now() / 1000);
+          saveLocalWatchlists(localLists);
+          syncWithCloudflare("push");
+          return { status: 200, data: target };
+        }
+      }
+    }
+
+    if (match.type === "APPEND") {
+      const target = localLists.find(l => String(l.id) === String(match.id)) || localLists[0];
+      let parsed = {};
+      try { parsed = typeof body === "string" ? JSON.parse(body) : (body || {}); } catch (_) {}
+      const toAdd = Array.isArray(parsed.symbols) ? parsed.symbols : (parsed.symbol ? [parsed.symbol] : []);
+      if (target) {
+        if (!target.symbols) target.symbols = [];
+        toAdd.forEach(sym => {
+          if (!target.symbols.includes(sym)) target.symbols.push(sym);
+        });
+        target.modified = Math.floor(Date.now() / 1000);
+        saveLocalWatchlists(localLists);
+        syncWithCloudflare("push");
+        return { status: 200, data: target };
+      }
+    }
+
+    if (match.type === "DELETE_SYMBOLS") {
+      const target = localLists.find(l => String(l.id) === String(match.id)) || localLists[0];
+      let parsed = {};
+      try { parsed = typeof body === "string" ? JSON.parse(body) : (body || {}); } catch (_) {}
+      const toRemove = Array.isArray(parsed.symbols) ? parsed.symbols : [];
+      if (target && target.symbols) {
+        target.symbols = target.symbols.filter(s => !toRemove.includes(s));
+        target.modified = Math.floor(Date.now() / 1000);
+        saveLocalWatchlists(localLists);
+        syncWithCloudflare("push");
+        return { status: 200, data: target };
+      }
+    }
+
+    if (match.type === "RENAME") {
+      const target = localLists.find(l => String(l.id) === String(match.id));
+      let parsed = {};
+      try { parsed = typeof body === "string" ? JSON.parse(body) : (body || {}); } catch (_) {}
+      if (target && parsed.name) {
+        target.name = parsed.name.trim();
+        target.modified = Math.floor(Date.now() / 1000);
+        saveLocalWatchlists(localLists);
+        syncWithCloudflare("push");
+        return { status: 200, data: target };
+      }
+    }
+
+    return { status: 200, data: lists };
+  }
+
+  // --- 5. Intercept window.fetch ---
+  const origFetch = window.fetch;
+  window.fetch = async function (resource, init) {
+    try {
+      const url = typeof resource === "string" ? resource : (resource ? resource.url : "");
+      const match = matchSymbolsListUrl(url);
+      if (match) {
+        const method = (init && init.method) || (typeof resource === "object" && resource.method) || "GET";
+        let body = init && init.body;
+        const result = handleSymbolsListRequest(method, match, body);
+        return new Response(JSON.stringify(result.data), {
+          status: result.status,
+          headers: { "Content-Type": "application/json; charset=utf-8" }
+        });
+      }
+    } catch (e) {
+      console.warn("[TVBackendProxy] Fetch intercept error:", e);
+    }
+    return origFetch.apply(this, arguments);
+  };
+
+  // --- 6. Intercept window.XMLHttpRequest ---
+  const origXhrOpen = XMLHttpRequest.prototype.open;
+  const origXhrSend = XMLHttpRequest.prototype.send;
+
+  XMLHttpRequest.prototype.open = function (method, url) {
+    this._tvMethod = method;
+    this._tvUrl = url;
+    this._tvMatch = matchSymbolsListUrl(url);
+    return origXhrOpen.apply(this, arguments);
+  };
+
+  XMLHttpRequest.prototype.send = function (body) {
+    if (this._tvMatch) {
+      const result = handleSymbolsListRequest(this._tvMethod, this._tvMatch, body);
+      const jsonStr = JSON.stringify(result.data);
+
+      Object.defineProperty(this, "status", { configurable: true, value: result.status });
+      Object.defineProperty(this, "statusText", { configurable: true, value: "OK" });
+      Object.defineProperty(this, "readyState", { configurable: true, value: 4 });
+      Object.defineProperty(this, "responseText", { configurable: true, value: jsonStr });
+      Object.defineProperty(this, "response", { configurable: true, value: jsonStr });
+
+      setTimeout(() => {
+        if (typeof this.onreadystatechange === "function") this.onreadystatechange();
+        if (typeof this.onload === "function") this.onload();
+        this.dispatchEvent(new Event("readystatechange"));
+        this.dispatchEvent(new Event("load"));
+        this.dispatchEvent(new Event("loadend"));
+      }, 5);
+      return;
+    }
+    return origXhrSend.apply(this, arguments);
+  };
+
+  // --- 7. Multi-Chart Layouts Unlock Hook ---
   (function unlockMultiChart() {
     try {
       const origParse = JSON.parse;
@@ -77,514 +432,26 @@
         }
         return plans;
       };
-    } catch (e) {
-      console.warn("[TVSync] Chart layout patch error:", e);
-    }
+    } catch (_) {}
   })();
 
-  // --- Network Sync with Cloudflare Worker ---
-  async function performSync(direction = "bidirectional") {
-    if (!config.syncToken) {
-      showToast("Please enter a Sync Token in settings");
-      return;
-    }
-
-    if (isSyncing) return;
-    isSyncing = true;
-    updateSyncButtonState(true);
-
-    const baseUrl = (config.workerUrl || DEFAULT_WORKER_URL).replace(/\/+$/, "");
-
+  // --- 8. Connect with Charting Library / IWatchListApi if present ---
+  function syncWithTvWidget() {
     try {
-      // 1. Fetch remote data
-      const getRes = await fetch(`${baseUrl}/api/sync`, {
-        headers: { "x-sync-token": config.syncToken }
-      });
-
-      if (!getRes.ok) throw new Error(`HTTP ${getRes.status}`);
-      const remote = await getRes.json();
-      const remoteTime = Number(remote.timestamp) || 0;
-
-      // 2. Decide merge strategy
-      if (
-        (direction === "pull" || remoteTime > config.lastSyncTime) &&
-        remote.watchlists &&
-        Array.isArray(remote.watchlists) &&
-        !remote.empty
-      ) {
-        watchlists = remote.watchlists;
-        saveWatchlists(watchlists);
-        config.lastSyncTime = remoteTime;
-        saveConfig(config);
-        renderDrawerWatchlists();
-        showToast(`Pulled ${watchlists.length} watchlists from cloud!`);
-      } else if (direction === "push" || direction === "bidirectional") {
-        // Push local to remote
-        const now = Date.now();
-        const payload = {
-          timestamp: now,
-          watchlists: watchlists,
-          client: "android-morphe-app"
-        };
-
-        const postRes = await fetch(`${baseUrl}/api/sync`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-sync-token": config.syncToken
-          },
-          body: JSON.stringify(payload)
-        });
-
-        if (!postRes.ok) throw new Error(`HTTP ${postRes.status}`);
-        config.lastSyncTime = now;
-        saveConfig(config);
-        showToast("Watchlists synced to cloud!");
+      if (window.tvWidget && typeof window.tvWidget.watchList === "function") {
+        window.tvWidget.watchList().then(wlApi => {
+          if (!wlApi) return;
+          localLists.forEach(wl => {
+            try {
+              if (typeof wlApi.createList === "function") {
+                wlApi.createList(wl.name, wl.symbols || [], String(wl.id));
+              }
+            } catch (_) {}
+          });
+        }).catch(() => {});
       }
-    } catch (err) {
-      console.error("[TVSync] Sync error:", err);
-      showToast("Sync failed: " + (err.message || "Network error"));
-    } finally {
-      isSyncing = false;
-      updateSyncButtonState(false);
-      updateDrawerStatus();
-    }
+    } catch (_) {}
   }
-
-  // --- Chart Symbol Dispatcher ---
-  function loadSymbolOnChart(symbol) {
-    try {
-      // 1. If window.TradingView chart instance is exposed
-      if (window.tvWidget && typeof window.tvWidget.chart === "function") {
-        window.tvWidget.chart().setSymbol(symbol);
-        showToast(`Loaded ${symbol}`);
-        closeDrawer();
-        return;
-      }
-      // 2. Try window.ChartApiInstance
-      if (window.ChartApiInstance && typeof window.ChartApiInstance.setSymbol === "function") {
-        window.ChartApiInstance.setSymbol(symbol);
-        showToast(`Loaded ${symbol}`);
-        closeDrawer();
-        return;
-      }
-      // 3. Fallback: simulate symbol search input or dispatch custom event
-      window.dispatchEvent(new CustomEvent("tv-morphe-symbol-select", { detail: { symbol } }));
-      showToast(`Selected ${symbol}`);
-      closeDrawer();
-    } catch (e) {
-      console.warn("[TVSync] Failed to load symbol:", e);
-    }
-  }
-
-  // --- UI Injection ---
-  function injectStyles() {
-    if (document.getElementById("tv-morphe-sync-style")) return;
-    const style = document.createElement("style");
-    style.id = "tv-morphe-sync-style";
-    style.textContent = `
-      #tv-morphe-sync-fab {
-        position: fixed;
-        bottom: 80px;
-        right: 16px;
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        background: #1e222d;
-        border: 2px solid #2962ff;
-        color: #2962ff;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.6);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        z-index: 9999999;
-        transition: transform 0.2s, background 0.2s, border-color 0.2s;
-        user-select: none;
-        -webkit-tap-highlight-color: transparent;
-      }
-      #tv-morphe-sync-fab:active {
-        transform: scale(0.92);
-      }
-      #tv-morphe-sync-fab svg {
-        width: 22px;
-        height: 22px;
-        fill: currentColor;
-      }
-      #tv-morphe-sync-fab.syncing svg {
-        animation: tv-spin 1s linear infinite;
-      }
-      @keyframes tv-spin {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-      }
-      #tv-morphe-sync-drawer-backdrop {
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,0.7);
-        backdrop-filter: blur(4px);
-        z-index: 99999998;
-        display: none;
-        opacity: 0;
-        transition: opacity 0.25s ease;
-      }
-      #tv-morphe-sync-drawer {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        max-height: 82vh;
-        background: #131722;
-        border-top: 1px solid #2a2e39;
-        border-radius: 16px 16px 0 0;
-        box-shadow: 0 -8px 32px rgba(0,0,0,0.8);
-        z-index: 99999999;
-        display: flex;
-        flex-direction: column;
-        transform: translateY(100%);
-        transition: transform 0.28s cubic-bezier(0.1, 0.9, 0.2, 1);
-        color: #d1d4dc;
-        font-family: -apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, sans-serif;
-      }
-      #tv-morphe-sync-drawer.open {
-        transform: translateY(0);
-      }
-      .tv-sync-header {
-        padding: 16px 20px;
-        border-bottom: 1px solid #2a2e39;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      .tv-sync-title {
-        font-size: 16px;
-        font-weight: 700;
-        color: #f0f3fa;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .tv-sync-close-btn {
-        background: none;
-        border: none;
-        color: #787b86;
-        font-size: 20px;
-        cursor: pointer;
-        padding: 4px 8px;
-      }
-      .tv-sync-body {
-        padding: 16px 20px;
-        overflow-y: auto;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-      }
-      .tv-sync-card {
-        background: #1e222d;
-        border-radius: 10px;
-        padding: 12px 14px;
-        border: 1px solid #2a2e39;
-      }
-      .tv-sync-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 8px;
-      }
-      .tv-sync-input {
-        background: #131722;
-        border: 1px solid #363a45;
-        border-radius: 6px;
-        color: #f0f3fa;
-        padding: 8px 12px;
-        font-size: 13px;
-        width: 100%;
-        box-sizing: border-box;
-      }
-      .tv-sync-input:focus {
-        border-color: #2962ff;
-        outline: none;
-      }
-      .tv-sync-btn {
-        background: #2962ff;
-        color: #ffffff;
-        border: none;
-        border-radius: 6px;
-        padding: 9px 16px;
-        font-size: 13px;
-        font-weight: 600;
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-      }
-      .tv-sync-btn:active {
-        opacity: 0.85;
-      }
-      .tv-sync-btn.secondary {
-        background: #2a2e39;
-        color: #d1d4dc;
-      }
-      .tv-sync-wl-item {
-        margin-bottom: 12px;
-        padding-bottom: 12px;
-        border-bottom: 1px solid #2a2e39;
-      }
-      .tv-sync-wl-name {
-        font-weight: 600;
-        font-size: 14px;
-        color: #f0f3fa;
-        margin-bottom: 6px;
-        display: flex;
-        justify-content: space-between;
-      }
-      .tv-sync-chips {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-      }
-      .tv-sync-chip {
-        background: #2a2e39;
-        color: #2962ff;
-        font-weight: 600;
-        padding: 4px 10px;
-        border-radius: 4px;
-        font-size: 12px;
-        cursor: pointer;
-      }
-      .tv-sync-chip:active {
-        background: #2962ff;
-        color: #fff;
-      }
-      #tv-morphe-toast {
-        position: fixed;
-        bottom: 136px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: rgba(30, 34, 45, 0.95);
-        color: #f0f3fa;
-        border: 1px solid #2962ff;
-        border-radius: 20px;
-        padding: 8px 18px;
-        font-size: 12px;
-        font-weight: 600;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.7);
-        z-index: 100000000;
-        display: none;
-        opacity: 0;
-        transition: opacity 0.2s ease;
-        pointer-events: none;
-      }
-    `;
-    document.head.appendChild(style);
-  }
-
-  function showToast(text) {
-    let toast = document.getElementById("tv-morphe-toast");
-    if (!toast) {
-      toast = document.createElement("div");
-      toast.id = "tv-morphe-toast";
-      document.body.appendChild(toast);
-    }
-    toast.textContent = text;
-    toast.style.display = "block";
-    setTimeout(() => { toast.style.opacity = "1"; }, 10);
-    clearTimeout(toast._timer);
-    toast._timer = setTimeout(() => {
-      toast.style.opacity = "0";
-      setTimeout(() => { toast.style.display = "none"; }, 200);
-    }, 2400);
-  }
-
-  function updateSyncButtonState(syncing) {
-    const fab = document.getElementById("tv-morphe-sync-fab");
-    if (!fab) return;
-    if (syncing) {
-      fab.classList.add("syncing");
-      fab.style.borderColor = "#00e5ff";
-      fab.style.color = "#00e5ff";
-    } else {
-      fab.classList.remove("syncing");
-      fab.style.borderColor = "#2962ff";
-      fab.style.color = "#2962ff";
-    }
-  }
-
-  function updateDrawerStatus() {
-    const statusEl = document.getElementById("tv-sync-status-text");
-    if (!statusEl) return;
-    if (!config.syncToken) {
-      statusEl.textContent = "Status: No Passkey configured";
-      statusEl.style.color = "#787b86";
-    } else if (config.lastSyncTime > 0) {
-      const dt = new Date(config.lastSyncTime);
-      statusEl.textContent = `Status: Synced at ${dt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
-      statusEl.style.color = "#00e5ff";
-    } else {
-      statusEl.textContent = "Status: Ready to sync";
-      statusEl.style.color = "#26a69a";
-    }
-  }
-
-  function renderDrawerWatchlists() {
-    const container = document.getElementById("tv-sync-watchlists-container");
-    if (!container) return;
-
-    if (!watchlists || watchlists.length === 0) {
-      container.innerHTML = `<div style="color: #787b86; font-size: 13px; text-align: center; padding: 12px 0;">No synced watchlists found. Tap 'Sync Now' or add on PC.</div>`;
-      return;
-    }
-
-    container.innerHTML = watchlists.map((wl) => {
-      const symbolsHtml = (wl.symbols || [])
-        .map((s) => `<span class="tv-sync-chip" data-symbol="${s}">${s}</span>`)
-        .join("");
-      return `
-        <div class="tv-sync-wl-item">
-          <div class="tv-sync-wl-name">
-            <span>${wl.name || "Watchlist"}</span>
-            <span style="font-size: 11px; color: #787b86;">${(wl.symbols || []).length} items</span>
-          </div>
-          <div class="tv-sync-chips">${symbolsHtml || '<span style="color:#787b86;font-size:11px;">Empty</span>'}</div>
-        </div>
-      `;
-    }).join("");
-
-    container.querySelectorAll(".tv-sync-chip").forEach((chip) => {
-      chip.addEventListener("click", () => {
-        const sym = chip.getAttribute("data-symbol");
-        if (sym) loadSymbolOnChart(sym);
-      });
-    });
-  }
-
-  function openDrawer() {
-    const backdrop = document.getElementById("tv-morphe-sync-drawer-backdrop");
-    const drawer = document.getElementById("tv-morphe-sync-drawer");
-    if (!drawer || !backdrop) return;
-    backdrop.style.display = "block";
-    setTimeout(() => {
-      backdrop.style.opacity = "1";
-      drawer.classList.add("open");
-    }, 10);
-    updateDrawerStatus();
-    renderDrawerWatchlists();
-  }
-
-  function closeDrawer() {
-    const backdrop = document.getElementById("tv-morphe-sync-drawer-backdrop");
-    const drawer = document.getElementById("tv-morphe-sync-drawer");
-    if (!drawer || !backdrop) return;
-    backdrop.style.opacity = "0";
-    drawer.classList.remove("open");
-    setTimeout(() => { backdrop.style.display = "none"; }, 250);
-  }
-
-  function buildUI() {
-    injectStyles();
-
-    // 1. Floating Action Button
-    let fab = document.getElementById("tv-morphe-sync-fab");
-    if (!fab) {
-      fab = document.createElement("div");
-      fab.id = "tv-morphe-sync-fab";
-      fab.title = "Cloud Watchlist Sync";
-      fab.innerHTML = `
-        <svg viewBox="0 0 24 24">
-          <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/>
-        </svg>
-      `;
-      document.body.appendChild(fab);
-      fab.addEventListener("click", openDrawer);
-    }
-
-    // 2. Drawer Backdrop
-    let backdrop = document.getElementById("tv-morphe-sync-drawer-backdrop");
-    if (!backdrop) {
-      backdrop = document.createElement("div");
-      backdrop.id = "tv-morphe-sync-drawer-backdrop";
-      document.body.appendChild(backdrop);
-      backdrop.addEventListener("click", closeDrawer);
-    }
-
-    // 3. Slide-up Drawer
-    let drawer = document.getElementById("tv-morphe-sync-drawer");
-    if (!drawer) {
-      drawer = document.createElement("div");
-      drawer.id = "tv-morphe-sync-drawer";
-      drawer.innerHTML = `
-        <div class="tv-sync-header">
-          <div class="tv-sync-title">
-            <svg style="width:20px;height:20px;fill:#2962ff;" viewBox="0 0 24 24">
-              <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM12 18l-4-4h2.5V10h3v4H16l-4 4z"/>
-            </svg>
-            Watchlist Cloud Sync
-          </div>
-          <button class="tv-sync-close-btn" id="tv-sync-close-btn">&times;</button>
-        </div>
-        <div class="tv-sync-body">
-          <div class="tv-sync-card">
-            <div id="tv-sync-status-text" style="font-size:12px; font-weight:600; margin-bottom:10px;">Status: Ready</div>
-            <div class="tv-sync-row" style="margin-bottom:8px;">
-              <input type="text" id="tv-sync-token-input" class="tv-sync-input" placeholder="Enter Sync Passkey (e.g. key_xxx)" value="${config.syncToken || ''}"/>
-              <button class="tv-sync-btn" id="tv-sync-save-token-btn">Save</button>
-            </div>
-            <div class="tv-sync-row">
-              <button class="tv-sync-btn" id="tv-sync-now-btn" style="flex:1;">Sync Now</button>
-              <button class="tv-sync-btn secondary" id="tv-sync-pull-btn">Pull</button>
-              <button class="tv-sync-btn secondary" id="tv-sync-push-btn">Push</button>
-            </div>
-          </div>
-
-          <div class="tv-sync-card" style="flex:1;">
-            <div style="font-size:13px; font-weight:700; color:#f0f3fa; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
-              <span>Synced Watchlists</span>
-              <span style="font-size:11px; color:#787b86;">Tap symbol to chart</span>
-            </div>
-            <div id="tv-sync-watchlists-container"></div>
-          </div>
-        </div>
-      `;
-      document.body.appendChild(drawer);
-
-      // Event Listeners
-      drawer.querySelector("#tv-sync-close-btn").addEventListener("click", closeDrawer);
-      drawer.querySelector("#tv-sync-save-token-btn").addEventListener("click", () => {
-        const input = drawer.querySelector("#tv-sync-token-input");
-        config.syncToken = (input.value || "").trim();
-        saveConfig(config);
-        updateDrawerStatus();
-        showToast("Passkey saved!");
-        performSync("bidirectional");
-      });
-      drawer.querySelector("#tv-sync-now-btn").addEventListener("click", () => performSync("bidirectional"));
-      drawer.querySelector("#tv-sync-pull-btn").addEventListener("click", () => performSync("pull"));
-      drawer.querySelector("#tv-sync-push-btn").addEventListener("click", () => performSync("push"));
-    }
-  }
-
-  // --- Auto-Sync and Initialization ---
-  function init() {
-    if (document.body) {
-      buildUI();
-      // Auto-pull on startup if token is set
-      if (config.syncToken && config.autoSync) {
-        setTimeout(() => performSync("pull"), 1200);
-      }
-    } else {
-      document.addEventListener("DOMContentLoaded", init);
-    }
-  }
-
-  init();
-
-  // Periodic background pull (every 60s)
-  setInterval(() => {
-    if (config.syncToken && config.autoSync && !isSyncing) {
-      performSync("pull");
-    }
-  }, 60000);
-
+  setTimeout(syncWithTvWidget, 1500);
+  setTimeout(syncWithTvWidget, 4000);
 })();
