@@ -1,7 +1,7 @@
 {
-  "created_at": "2026-11-12T10:08:52",
-  "description": "## [1.4.0](https://github.com/sahilwasgood/patches/compare/v1.3.0...v1.4.0) (2026-11-12)\n\n### 🐛 Bug Fixes\n\n* **tradingview:** use dedicated tradingview.patches namespace and Morphe 1.x patcher API ([e96578f](https://github.com/sahilwasgood/patches/commit/e96578fc0b06341febb9325b47333f9c8a5eed3f))\n\n### ✨ New Features\n\n* **tradingview:** add Watchlist Cloud Sync and features suite ([f9ac5a6](https://github.com/sahilwasgood/patches/commit/f9ac5a62eb2d39b296e942f3ccb39af91189221c))",
-  "download_url": "https://github.com/sahilwasgood/patches/releases/download/v1.4.0/patches-1.4.0.mpp",
+  "created_at": "2026-11-12T10:17:16",
+  "description": "## [1.4.1](https://github.com/sahilwasgood/patches/compare/v1.4.0...v1.4.1) (2026-11-12)\n\n### 🐛 Bug Fixes\n\n* **tradingview:** set APK_REQUIRED and stable targets for Morphe Manager visibility ([d938c1b](https://github.com/sahilwasgood/patches/commit/d938c1b60955fe4609eec61df36919359ed02be7))",
+  "download_url": "https://github.com/sahilwasgood/patches/releases/download/v1.4.1/patches-1.4.1.mpp",
   "signature_download_url": "",
-  "version": "1.4.0"
+  "version": "1.4.1"
 }

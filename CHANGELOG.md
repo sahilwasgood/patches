@@ -1,3 +1,9 @@
+## [1.4.1](https://github.com/sahilwasgood/patches/compare/v1.4.0...v1.4.1) (2026-11-12)
+
+### 🐛 Bug Fixes
+
+* **tradingview:** set APK_REQUIRED and stable targets for Morphe Manager visibility ([d938c1b](https://github.com/sahilwasgood/patches/commit/d938c1b60955fe4609eec61df36919359ed02be7))
+
 ## [1.4.0](https://github.com/sahilwasgood/patches/compare/v1.3.0...v1.4.0) (2026-11-12)
 
 ### 🐛 Bug Fixes

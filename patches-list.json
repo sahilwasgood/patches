@@ -1,6 +1,6 @@
 {
   "NOTE": "Do NOT manually edit this file. This file is automatically updated when semantic release (release.yml) runs. Manually editing this file can break your releases and break third party tools that use this file.",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "patches": [
     {
       "name": "Disable analytics",
@@ -12,16 +12,70 @@
           "packageName": "com.tradingview.tradingviewapp",
           "name": "TradingView",
           "description": null,
-          "apkFileType": "APKS_REQUIRED",
+          "apkFileType": "APK_REQUIRED",
           "appIconColor": "#131722",
-          "signatures": [
-            "44f047fc6b34b0ba0c491f825bb4e43770d2bc941220d290a70f3a8467aed601"
-          ],
+          "signatures": null,
           "targets": [
             {
               "version": "1.20.86.0.1002565",
               "versionCodes": null,
-              "isExperimental": true,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.86.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.85.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.21.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.22.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.23.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.24.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.25.0",
+              "versionCodes": null,
+              "isExperimental": false,
               "minSdk": 26,
               "description": null
             }
@@ -40,16 +94,70 @@
           "packageName": "com.tradingview.tradingviewapp",
           "name": "TradingView",
           "description": null,
-          "apkFileType": "APKS_REQUIRED",
+          "apkFileType": "APK_REQUIRED",
           "appIconColor": "#131722",
-          "signatures": [
-            "44f047fc6b34b0ba0c491f825bb4e43770d2bc941220d290a70f3a8467aed601"
-          ],
+          "signatures": null,
           "targets": [
             {
               "version": "1.20.86.0.1002565",
               "versionCodes": null,
-              "isExperimental": true,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.86.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.85.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.21.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.22.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.23.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.24.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.25.0",
+              "versionCodes": null,
+              "isExperimental": false,
               "minSdk": 26,
               "description": null
             }
@@ -276,16 +384,70 @@
           "packageName": "com.tradingview.tradingviewapp",
           "name": "TradingView",
           "description": null,
-          "apkFileType": "APKS_REQUIRED",
+          "apkFileType": "APK_REQUIRED",
           "appIconColor": "#131722",
-          "signatures": [
-            "44f047fc6b34b0ba0c491f825bb4e43770d2bc941220d290a70f3a8467aed601"
-          ],
+          "signatures": null,
           "targets": [
             {
               "version": "1.20.86.0.1002565",
               "versionCodes": null,
-              "isExperimental": true,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.86.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.85.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.21.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.22.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.23.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.24.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.25.0",
+              "versionCodes": null,
+              "isExperimental": false,
               "minSdk": 26,
               "description": null
             }
@@ -747,16 +909,70 @@
           "packageName": "com.tradingview.tradingviewapp",
           "name": "TradingView",
           "description": null,
-          "apkFileType": "APKS_REQUIRED",
+          "apkFileType": "APK_REQUIRED",
           "appIconColor": "#131722",
-          "signatures": [
-            "44f047fc6b34b0ba0c491f825bb4e43770d2bc941220d290a70f3a8467aed601"
-          ],
+          "signatures": null,
           "targets": [
             {
               "version": "1.20.86.0.1002565",
               "versionCodes": null,
-              "isExperimental": true,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.86.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.85.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.21.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.22.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.23.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.24.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.25.0",
+              "versionCodes": null,
+              "isExperimental": false,
               "minSdk": 26,
               "description": null
             }
@@ -775,16 +991,70 @@
           "packageName": "com.tradingview.tradingviewapp",
           "name": "TradingView",
           "description": null,
-          "apkFileType": "APKS_REQUIRED",
+          "apkFileType": "APK_REQUIRED",
           "appIconColor": "#131722",
-          "signatures": [
-            "44f047fc6b34b0ba0c491f825bb4e43770d2bc941220d290a70f3a8467aed601"
-          ],
+          "signatures": null,
           "targets": [
             {
               "version": "1.20.86.0.1002565",
               "versionCodes": null,
-              "isExperimental": true,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.86.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.85.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.21.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.22.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.23.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.24.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.25.0",
+              "versionCodes": null,
+              "isExperimental": false,
               "minSdk": 26,
               "description": null
             }
@@ -803,16 +1073,70 @@
           "packageName": "com.tradingview.tradingviewapp",
           "name": "TradingView",
           "description": null,
-          "apkFileType": "APKS_REQUIRED",
+          "apkFileType": "APK_REQUIRED",
           "appIconColor": "#131722",
-          "signatures": [
-            "44f047fc6b34b0ba0c491f825bb4e43770d2bc941220d290a70f3a8467aed601"
-          ],
+          "signatures": null,
           "targets": [
             {
               "version": "1.20.86.0.1002565",
               "versionCodes": null,
-              "isExperimental": true,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.86.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.85.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.21.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.22.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.23.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.24.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.25.0",
+              "versionCodes": null,
+              "isExperimental": false,
               "minSdk": 26,
               "description": null
             }
