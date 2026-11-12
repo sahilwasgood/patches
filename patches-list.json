@@ -1,6 +1,6 @@
 {
   "NOTE": "Do NOT manually edit this file. This file is automatically updated when semantic release (release.yml) runs. Manually editing this file can break your releases and break third party tools that use this file.",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "patches": [
     {
       "name": "Disable analytics",
@@ -24,56 +24,70 @@
               "description": null
             },
             {
-              "version": "1.20.86.0",
+              "version": "1.20.85.0.1002535",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.20.85.0",
+              "version": "1.20.84.0.1002505",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.20.0",
+              "version": "1.20.83.0.1002475",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.21.0",
+              "version": "1.20.82.0.1002445",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.22.0",
+              "version": "1.20.81.1.1002420",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.23.0",
+              "version": "1.20.81.0.1002415",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.24.0",
+              "version": "1.20.80.0.1002385",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.25.0",
+              "version": "1.20.75.0.1002235",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.74.0.1002205",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.70.0.1002085",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
@@ -106,56 +120,70 @@
               "description": null
             },
             {
-              "version": "1.20.86.0",
+              "version": "1.20.85.0.1002535",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.20.85.0",
+              "version": "1.20.84.0.1002505",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.20.0",
+              "version": "1.20.83.0.1002475",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.21.0",
+              "version": "1.20.82.0.1002445",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.22.0",
+              "version": "1.20.81.1.1002420",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.23.0",
+              "version": "1.20.81.0.1002415",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.24.0",
+              "version": "1.20.80.0.1002385",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.25.0",
+              "version": "1.20.75.0.1002235",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.74.0.1002205",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.70.0.1002085",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
@@ -396,56 +424,70 @@
               "description": null
             },
             {
-              "version": "1.20.86.0",
+              "version": "1.20.85.0.1002535",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.20.85.0",
+              "version": "1.20.84.0.1002505",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.20.0",
+              "version": "1.20.83.0.1002475",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.21.0",
+              "version": "1.20.82.0.1002445",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.22.0",
+              "version": "1.20.81.1.1002420",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.23.0",
+              "version": "1.20.81.0.1002415",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.24.0",
+              "version": "1.20.80.0.1002385",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.25.0",
+              "version": "1.20.75.0.1002235",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.74.0.1002205",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.70.0.1002085",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
@@ -921,56 +963,70 @@
               "description": null
             },
             {
-              "version": "1.20.86.0",
+              "version": "1.20.85.0.1002535",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.20.85.0",
+              "version": "1.20.84.0.1002505",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.20.0",
+              "version": "1.20.83.0.1002475",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.21.0",
+              "version": "1.20.82.0.1002445",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.22.0",
+              "version": "1.20.81.1.1002420",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.23.0",
+              "version": "1.20.81.0.1002415",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.24.0",
+              "version": "1.20.80.0.1002385",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.25.0",
+              "version": "1.20.75.0.1002235",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.74.0.1002205",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.70.0.1002085",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
@@ -1003,56 +1059,70 @@
               "description": null
             },
             {
-              "version": "1.20.86.0",
+              "version": "1.20.85.0.1002535",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.20.85.0",
+              "version": "1.20.84.0.1002505",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.20.0",
+              "version": "1.20.83.0.1002475",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.21.0",
+              "version": "1.20.82.0.1002445",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.22.0",
+              "version": "1.20.81.1.1002420",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.23.0",
+              "version": "1.20.81.0.1002415",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.24.0",
+              "version": "1.20.80.0.1002385",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.25.0",
+              "version": "1.20.75.0.1002235",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.74.0.1002205",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.70.0.1002085",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
@@ -1085,56 +1155,70 @@
               "description": null
             },
             {
-              "version": "1.20.86.0",
+              "version": "1.20.85.0.1002535",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.20.85.0",
+              "version": "1.20.84.0.1002505",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.20.0",
+              "version": "1.20.83.0.1002475",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.21.0",
+              "version": "1.20.82.0.1002445",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.22.0",
+              "version": "1.20.81.1.1002420",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.23.0",
+              "version": "1.20.81.0.1002415",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.24.0",
+              "version": "1.20.80.0.1002385",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
               "description": null
             },
             {
-              "version": "1.25.0",
+              "version": "1.20.75.0.1002235",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.74.0.1002205",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            },
+            {
+              "version": "1.20.70.0.1002085",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,

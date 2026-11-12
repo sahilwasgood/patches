@@ -51,15 +51,15 @@ opts in by adding a clip and dropping its PNG.
 ## Patches list
 
 <!-- PATCHES_START EXPANDED -->
-> **[v1.4.1](https://github.com/sahilwasgood/patches/releases/tag/v1.4.1)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;12 patches total
+> **[v1.4.2](https://github.com/sahilwasgood/patches/releases/tag/v1.4.2)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;12 patches total
 <details open>
 <summary>📦 TradingView&nbsp;&nbsp;•&nbsp;&nbsp;6 patches</summary>
 <br>
 
 **🎯 Supported versions:**
 
-| 1.20.86.0.1002565 | 1.20.86.0 | 1.20.85.0 | 1.20.0 | 1.21.0 | 1.22.0 | 1.23.0 | 1.24.0 | 1.25.0 |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 1.20.86.0.1002565 | 1.20.85.0.1002535 | 1.20.84.0.1002505 | 1.20.83.0.1002475 | 1.20.82.0.1002445 | 1.20.81.1.1002420 | 1.20.81.0.1002415 | 1.20.80.0.1002385 | 1.20.75.0.1002235 | 1.20.74.0.1002205 | 1.20.70.0.1002085 |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 
 | 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
 |----------|----------------|-----------|

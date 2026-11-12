@@ -1,3 +1,9 @@
+## [1.4.2](https://github.com/sahilwasgood/patches/compare/v1.4.1...v1.4.2) (2026-11-12)
+
+### 🐛 Bug Fixes
+
+* **tradingview:** use exact official build version targets ([08710b1](https://github.com/sahilwasgood/patches/commit/08710b1f89c7c84c654a4ef5cfbf7f3244772f92))
+
 ## [1.4.1](https://github.com/sahilwasgood/patches/compare/v1.4.0...v1.4.1) (2026-11-12)
 
 ### 🐛 Bug Fixes
