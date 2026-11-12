@@ -7,12 +7,17 @@ import app.morphe.patcher.patch.Compatibility
 val COMPATIBILITY_TRADINGVIEW = Compatibility(
     name = "TradingView",
     packageName = "com.tradingview.tradingviewapp",
-    apkFileType = ApkFileType.APKS_REQUIRED,
+    apkFileType = ApkFileType.APK_REQUIRED,
     appIconColor = 0x131722,
-    signatures = setOf(
-        "44f047fc6b34b0ba0c491f825bb4e43770d2bc941220d290a70f3a8467aed601",
-    ),
     targets = listOf(
-        AppTarget(version = "1.20.86.0.1002565", minSdk = 26, isExperimental = true)
+        AppTarget(version = "1.20.86.0.1002565", minSdk = 26),
+        AppTarget(version = "1.20.86.0", minSdk = 26),
+        AppTarget(version = "1.20.85.0", minSdk = 26),
+        AppTarget(version = "1.20.0", minSdk = 26),
+        AppTarget(version = "1.21.0", minSdk = 26),
+        AppTarget(version = "1.22.0", minSdk = 26),
+        AppTarget(version = "1.23.0", minSdk = 26),
+        AppTarget(version = "1.24.0", minSdk = 26),
+        AppTarget(version = "1.25.0", minSdk = 26),
     )
 )
