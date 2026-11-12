@@ -1,3 +1,9 @@
+## [1.4.3](https://github.com/sahilwasgood/patches/compare/v1.4.2...v1.4.3) (2026-11-12)
+
+### 🐛 Bug Fixes
+
+* **tradingview:** remove ForceLocalProPlan patch and fingerprints ([83fc3bc](https://github.com/sahilwasgood/patches/commit/83fc3bcffc7de247c8a66f6bf6456bceedea7696))
+
 ## [1.4.2](https://github.com/sahilwasgood/patches/compare/v1.4.1...v1.4.2) (2026-11-12)
 
 ### 🐛 Bug Fixes

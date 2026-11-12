@@ -51,7 +51,7 @@ opts in by adding a clip and dropping its PNG.
 ## Patches list
 
 <!-- PATCHES_START EXPANDED -->
-> **[v1.4.2](https://github.com/sahilwasgood/patches/releases/tag/v1.4.2)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;12 patches total
+> **[v1.4.3](https://github.com/sahilwasgood/patches/releases/tag/v1.4.3)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;11 patches total
 <details open>
 <summary>📦 TradingView&nbsp;&nbsp;•&nbsp;&nbsp;5 patches</summary>
 <br>
