@@ -1,7 +1,6 @@
 package tradingview.patches
 
 import app.morphe.patcher.Fingerprint
-import com.android.tools.smali.dexlib2.AccessFlags
 
 /**
  * AdvancedWebView initialization hook in TradingView.
@@ -11,27 +10,6 @@ object InitWebViewFingerprint : Fingerprint(
     definingClass = "Lcom/tradingview/tradingviewapp/core/js/standartwebview/WebViewSessionBuilder;",
     name = "initWebView",
     parameters = listOf("Lcom/tradingview/tradingviewapp/core/js/standartwebview/AdvancedWebView;"),
-)
-
-/**
- * Plan determination hook.
- */
-object ProPlanDefineFingerprint : Fingerprint(
-    definingClass = "Lcom/tradingview/tradingviewapp/feature/profile/api/plan/ProPlan\$Companion;",
-    name = "define",
-    returnType = "Lcom/tradingview/tradingviewapp/feature/profile/api/plan/ProPlan;",
-    parameters = listOf("Ljava/lang/String;"),
-)
-
-/**
- * Converts CurrentUser into UserPlanState.
- */
-object ToPlanStateFingerprint : Fingerprint(
-    definingClass = "Lcom/tradingview/tradingviewapp/feature/profile/impl/interactor/UserStateInteractorImplKt;",
-    name = "toPlanState",
-    accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.STATIC, AccessFlags.FINAL),
-    returnType = "Lcom/tradingview/tradingviewapp/feature/profile/api/plan/UserPlanState;",
-    parameters = listOf("Lcom/tradingview/tradingviewapp/feature/profile/api/user/CurrentUser;"),
 )
 
 /**
@@ -95,17 +73,6 @@ object GoProActionDispatchFingerprint : Fingerprint(
     name = "dispatchAction",
     returnType = "V",
     parameters = listOf("Lcom/tradingview/tradingviewapp/gopro/api/model/BaseGoProAction;"),
-)
-
-/**
- * GoPro profile banner interactor.
- */
-object GetProfileBannerFingerprint : Fingerprint(
-    definingClass = "Lcom/tradingview/tradingviewapp/gopro/impl/core/interactor/GoProBannersInteractorImpl;",
-    name = "getProfileBanner",
-    accessFlags = listOf(AccessFlags.PUBLIC),
-    returnType = "Ljava/lang/Object;",
-    parameters = listOf("Lkotlin/coroutines/Continuation;"),
 )
 
 /**

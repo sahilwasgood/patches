@@ -53,7 +53,7 @@ opts in by adding a clip and dropping its PNG.
 <!-- PATCHES_START EXPANDED -->
 > **[v1.4.2](https://github.com/sahilwasgood/patches/releases/tag/v1.4.2)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;12 patches total
 <details open>
-<summary>📦 TradingView&nbsp;&nbsp;•&nbsp;&nbsp;6 patches</summary>
+<summary>📦 TradingView&nbsp;&nbsp;•&nbsp;&nbsp;5 patches</summary>
 <br>
 
 **🎯 Supported versions:**
@@ -64,7 +64,6 @@ opts in by adding a clip and dropping its PNG.
 | 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
 |----------|----------------|-----------|
 | [Disable analytics](#disable-analytics) | Disables telemetry, screen tracking, and analytics reporting to Firebase and SnowPlow. |  |
-| [Force local Pro plan](#force-local-pro-plan) | Forces the local plan lookup and plan state to report Pro/Ultimate. |  |
 | [Hide ads and upgrade promotions](#hide-ads-and-upgrade-promotions) | Hides AdMob ads, GoPro ads in feed, promotional banners in profile and watchlists, and paywall sheets. |  |
 | [Ultimate user badge](#ultimate-user-badge) | Forces the Ultimate badge on the current user profile. Visual only. |  |
 | [Unlock multi-chart layouts](#unlock-multi-chart-layouts) | Unlocks chart layouts with up to 8 charts on one screen. |  |
