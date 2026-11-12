@@ -1,3 +1,13 @@
+## [1.4.0](https://github.com/sahilwasgood/patches/compare/v1.3.0...v1.4.0) (2026-11-12)
+
+### 🐛 Bug Fixes
+
+* **tradingview:** use dedicated tradingview.patches namespace and Morphe 1.x patcher API ([e96578f](https://github.com/sahilwasgood/patches/commit/e96578fc0b06341febb9325b47333f9c8a5eed3f))
+
+### ✨ New Features
+
+* **tradingview:** add Watchlist Cloud Sync and features suite ([f9ac5a6](https://github.com/sahilwasgood/patches/commit/f9ac5a62eb2d39b296e942f3ccb39af91189221c))
+
 ## [1.3.0](https://github.com/sahilwasgood/patches/compare/v1.2.2...v1.3.0) (2026-10-18)
 
 ### ✨ New Features
