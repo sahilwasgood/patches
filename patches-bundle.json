@@ -1,7 +1,7 @@
 {
-  "created_at": "2026-11-12T10:51:11",
-  "description": "## [1.4.3](https://github.com/sahilwasgood/patches/compare/v1.4.2...v1.4.3) (2026-11-12)\n\n### 🐛 Bug Fixes\n\n* **tradingview:** remove ForceLocalProPlan patch and fingerprints ([83fc3bc](https://github.com/sahilwasgood/patches/commit/83fc3bcffc7de247c8a66f6bf6456bceedea7696))",
-  "download_url": "https://github.com/sahilwasgood/patches/releases/download/v1.4.3/patches-1.4.3.mpp",
+  "created_at": "2026-11-12T11:09:19",
+  "description": "## [1.5.0](https://github.com/sahilwasgood/patches/compare/v1.4.3...v1.5.0) (2026-11-12)\n\n### ✨ New Features\n\n* **tradingview:** route native watchlist UI to Cloudflare sync backend and remove custom button ([4ac04bc](https://github.com/sahilwasgood/patches/commit/4ac04bc4b6ab62db1b6052938a3f035dfa996f39))",
+  "download_url": "https://github.com/sahilwasgood/patches/releases/download/v1.5.0/patches-1.5.0.mpp",
   "signature_download_url": "",
-  "version": "1.4.3"
+  "version": "1.5.0"
 }

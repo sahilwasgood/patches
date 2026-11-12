@@ -1,6 +1,6 @@
 {
   "NOTE": "Do NOT manually edit this file. This file is automatically updated when semantic release (release.yml) runs. Manually editing this file can break your releases and break third party tools that use this file.",
-  "version": "1.4.3",
+  "version": "1.5.0",
   "patches": [
     {
       "name": "Disable analytics",
@@ -1039,7 +1039,7 @@
     },
     {
       "name": "Watchlist Cloud Sync & Manager",
-      "description": "Syncs watchlists across Desktop Extension, Android, and Cloudflare Worker. Adds an in-app floating sync manager with real-time bidirectional sync and custom watchlists.",
+      "description": "Replaces TradingView's watchlist backend with our Cloudflare synced storage directly in the native TradingView watchlist UI.",
       "default": true,
       "category": null,
       "compatiblePackages": [

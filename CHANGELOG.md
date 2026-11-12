@@ -1,3 +1,9 @@
+## [1.5.0](https://github.com/sahilwasgood/patches/compare/v1.4.3...v1.5.0) (2026-11-12)
+
+### ✨ New Features
+
+* **tradingview:** route native watchlist UI to Cloudflare sync backend and remove custom button ([4ac04bc](https://github.com/sahilwasgood/patches/commit/4ac04bc4b6ab62db1b6052938a3f035dfa996f39))
+
 ## [1.4.3](https://github.com/sahilwasgood/patches/compare/v1.4.2...v1.4.3) (2026-11-12)
 
 ### 🐛 Bug Fixes
